@@ -300,6 +300,7 @@
     </EntityDeploy>
     <Content Include="Models\Movies.edmx.diagram">
       <DependentUpon>Movies.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <EntityDeploy Include="Models\MovieDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -332,14 +333,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -385,6 +381,15 @@
     <Content Include="Views\IDs1\Details.cshtml" />
     <Content Include="Views\IDs1\Edit.cshtml" />
     <Content Include="Views\IDs1\Index.cshtml" />
+    <Content Include="Web.Config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web.Debug.Config">
+      <DependentUpon>Web.Config</DependentUpon>
+    </None>
+    <None Include="Web.Release.Config">
+      <DependentUpon>Web.Config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

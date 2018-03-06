@@ -123,5 +123,41 @@ namespace MoviePlotQuiz.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Pulls random movie ID from database
+        public string RandomId()
+        {
+            Random rnd = new Random();
+            int Rando = rnd.Next(0, 232);
+            ID[] array = db.IDs.ToArray();
+
+            try
+            {
+                string randomId = array[Rando].ImdbId;
+                return randomId;               
+            }
+            catch (Exception)
+            {
+                return RandomId();
+            }
+        }
+
+        //Pulls random movie Title from database
+        public string RandomTitle()
+        {
+            Random rnd = new Random();
+            int Rando = rnd.Next(0, 232);
+            ID[] array = db.IDs.ToArray();
+
+            try
+            {
+                string randomTitle = array[Rando].Title;
+                return randomTitle;
+            }
+            catch (Exception)
+            {
+                return RandomTitle();
+            }
+        }
     }
 }
