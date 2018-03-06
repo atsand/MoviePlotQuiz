@@ -45,12 +45,14 @@ namespace MoviePlotQuiz.Controllers
 
             JObject movie = JObject.Parse(data);
 
-            ViewBag.AnswerTitle = movie["Title"];
-            ViewBag.AnswerReleasedDate = movie["Released"];
-            ViewBag.AnswerActors = movie["Actors"];
-            ViewBag.AnswerPlot = movie["Plot"];
-            ViewBag.AnswerPosterURL = movie["Poster"];
-            ViewBag.AnswerDirector = movie["Director"];
+           
+            Session.Add("title", movie["Title"]);
+            Session.Add("released", movie["Released"]);
+            Session.Add("actors", movie["Actors"]);
+            Session.Add("plot", movie["Plot"]);
+            Session.Add("director", movie["Director"]);           
+            Session.Add("poster", movie["Poster"]);
+            
         }
 
         public ActionResult Quiz()

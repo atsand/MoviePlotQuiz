@@ -6,12 +6,12 @@
     <h2>Answer</h2>
 
     <p>Question #@ViewBag.id: </p>
-           <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
-    <img style="float: right" src="~/Content/whySoSerious.jpg" height="428" width="300">
+    <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
+    <img style="float: right" src="@Session["poster"]" height="428" width="300">
 
     <p>What movie is this?</p>
 
-    <p id="plot">This is where the plot of the movie goes to describe a movie</p>
+    <p id="plot">@Session["plot"]</p>
     <p>Select an answer</p>
 
     <p>
