@@ -17,8 +17,12 @@ namespace MoviePlotQuiz.Controllers
         // GET: IDs1
         public ActionResult Index()
         {
+            
             return View(db.IDs.ToList());
+
         }
+    
+      
 
         // GET: IDs1/Details/5
         public ActionResult Details(int? id)

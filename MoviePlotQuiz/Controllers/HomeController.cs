@@ -52,5 +52,27 @@ namespace MoviePlotQuiz.Controllers
             ViewBag.AnswerPosterURL = movie["Poster"];
             ViewBag.AnswerDirector = movie["Director"];
         }
+
+        public ActionResult Quiz()
+        {
+            int id = 0;
+            ViewBag.id = id;
+            id++;
+            return View();
+        }
+
+        public ActionResult QuizClone()
+        {
+            int id = 1;
+            ViewBag.id = id;
+            return View();
+        }
+
+        public ActionResult Summary()
+        {
+
+
+            return View();
+        }
     }
 }

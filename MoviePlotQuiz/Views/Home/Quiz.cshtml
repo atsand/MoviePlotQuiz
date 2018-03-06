@@ -1,0 +1,46 @@
+﻿<!--      poster size is 300 x 428  -->
+@{
+    ViewBag.Title = "Quiz";
+}
+
+<body style="background-color: silver">
+
+    <h2>Quiz</h2>
+
+    <p>Question #@ViewBag.id: </p>
+    <img style="float: right" src="~/Content/riddlerQuestion.jpg" height="428" width="300">
+
+    <p>What movie is this?</p>
+
+    <p id="plot">This is where the plot of the movie goes to describe a movie</p>
+    <form action="QuizClone" method="post" class="question">
+        <p>Select an answer</p>
+
+        <p>
+            <input type="radio" id="answer1" name="Answer" />  <label id="label1">Answer 1  </label>
+        </p>
+        <p>
+            <input type="radio" id="answer2" name="Answer" />  <label>Answer 2  </label>
+        </p>
+        <p>
+            <input type="radio" id="answer3" name="Answer" />  <label>Answer 3  </label>
+        </p>
+        <input type="submit" value="Submit" onclick="highlight()">
+    </form>
+
+    <script>
+        function highlight() {
+
+            var answer = true;
+
+            if (answer == true) {
+                alert("highlight answer");
+                document.getElementById("label1").style.color = "green";
+            }
+
+        }
+    </script>
+
+
+</body>
+
