@@ -8,11 +8,12 @@
     <h2>Quiz</h2>
 
     <p>Question #@ViewBag.id: </p>
+
     <img style="float: right" src="~/Content/riddlerQuestion.jpg" height="428" width="300">
 
     <p>What movie is this?</p>
 
-    <p id="plot">This is where the plot of the movie goes to describe a movie</p>
+    <p id="plot">@Session["plot"]</p>
     <form action="QuizClone" method="post" class="question">
         <p>Select an answer</p>
 
@@ -34,7 +35,6 @@
             var answer = true;
 
             if (answer == true) {
-                alert("highlight answer");
                 document.getElementById("label1").style.color = "green";
             }
 
