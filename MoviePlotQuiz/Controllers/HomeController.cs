@@ -55,6 +55,7 @@ namespace MoviePlotQuiz.Controllers
 
         public ActionResult Quiz()
         {
+            GetMovieData(IDs1Controller.RandomId());
             int id = 0;
             ViewBag.id = id;
             id++;
