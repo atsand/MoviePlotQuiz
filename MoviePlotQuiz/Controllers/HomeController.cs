@@ -70,8 +70,6 @@ namespace MoviePlotQuiz.Controllers
 
         public ActionResult Summary()
         {
-
-
             return View();
         }
     }
