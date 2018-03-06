@@ -13,7 +13,7 @@ namespace MoviePlotQuiz.Controllers
     public class IDs1Controller : Controller
     {
         private MoviesEntities1 db = new MoviesEntities1();
-
+        
         // GET: IDs1
         public ActionResult Index()
         {
