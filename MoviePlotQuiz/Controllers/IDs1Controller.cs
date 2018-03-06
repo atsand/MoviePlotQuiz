@@ -12,7 +12,7 @@ namespace MoviePlotQuiz.Controllers
 {
     public class IDs1Controller : Controller
     {
-        private MoviesEntities1 db = new MoviesEntities1();
+        public static MoviesEntities1 db = new MoviesEntities1();
         
         // GET: IDs1
         public ActionResult Index()
@@ -125,7 +125,7 @@ namespace MoviePlotQuiz.Controllers
         }
 
         //Pulls random movie ID from database
-        public string RandomId()
+        public static string RandomId()
         {
             Random rnd = new Random();
             int Rando = rnd.Next(0, 232);
@@ -143,7 +143,7 @@ namespace MoviePlotQuiz.Controllers
         }
 
         //Pulls random movie Title from database
-        public string RandomTitle()
+        public static string RandomTitle()
         {
             Random rnd = new Random();
             int Rando = rnd.Next(0, 232);
