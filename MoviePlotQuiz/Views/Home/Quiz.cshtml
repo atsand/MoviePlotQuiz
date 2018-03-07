@@ -18,13 +18,13 @@
         <p>Select an answer</p>
 
         <p>
-            <input type="radio" id="answer1" name="Answer" required />  <label id="label1">Answer 1  </label>
+            <input type="radio" id="answer1" name="Answer" required />  <label id="label1">@Session["title"]  </label>
         </p>
         <p>
-            <input type="radio" id="answer2" name="Answer" />  <label>Answer 2  </label>
+            <input type="radio" id="answer2" name="Answer" />  <label>@Session["title2"]  </label>
         </p>
         <p>
-            <input type="radio" id="answer3" name="Answer" />  <label>Answer 3  </label>
+            <input type="radio" id="answer3" name="Answer" />  <label>@Session["title3"] </label>
         </p>
         <input type="submit" value="Submit" onclick="highlight()">
     </form>
