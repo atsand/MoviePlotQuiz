@@ -94,17 +94,39 @@ namespace MoviePlotQuiz.Controllers
         {
             GetMovieData(IDs1Controller.RandomId());
             GetFillerTitles();
-
-            int id = 0;
-            ViewBag.id = id;
-            id++;
-            return View();
+           
+            if (Models.Quiz.QuestionNum<10)
+            {
+                Models.Quiz.QuestionNum++;
+                Session.Add("QNum", Models.Quiz.QuestionNum);
+                return View();
+            }
+            else
+            {
+                ViewBag.QuestionNum = Models.Quiz.QuestionNum;
+                ViewBag.AnswersCorrect = Models.Quiz.AnswersCorrect;
+                ViewBag.AnswersWrong = Models.Quiz.AnswersWrong;
+                ViewBag.Percent = (Models.Quiz.AnswersCorrect / (Models.Quiz.QuestionNum) * 100);
+                Models.Quiz.QuestionNum = 0;
+                Models.Quiz.AnswersCorrect = 0;
+                Models.Quiz.AnswersWrong = 0;
+                return View("Summary");
+            }
         }
 
-        public ActionResult QuizClone()
+        public ActionResult QuizClone(Guess g)
         {
-            int id = 1;
-            ViewBag.id = id;
+            Session.Add("UserAnswer", g.Answer.ToString());
+
+            if (g.Answer==Session["title"].ToString())
+            {
+                Models.Quiz.AnswersCorrect++;
+            }
+            else
+            {
+                Models.Quiz.AnswersWrong++;
+            }
+
             return View();
         }
 

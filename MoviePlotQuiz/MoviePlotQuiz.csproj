@@ -200,6 +200,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Guess.cs" />
     <Compile Include="Models\ID.cs">
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>
@@ -236,6 +237,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Movies.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Quiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -395,6 +397,7 @@
     <Content Include="Web.Config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Home\QuizStart.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
