@@ -55,10 +55,28 @@ namespace MoviePlotQuiz.Controllers
             
         }
 
+        public void GetFillerTitles()
+        {
+            string title2 = IDs1Controller.RandomTitle();
+            string title3 = IDs1Controller.RandomTitle();
+
+            if (title2 != Session["title"] && title3 != Session["title"] && title2 != title3)
+            {
+                Session.Add("title2", title2);
+                Session.Add("title3", title3);
+            }
+            else
+            {
+                GetFillerTitles();
+            }
+
+        }
+
         public ActionResult Quiz()
         {
             GetMovieData(IDs1Controller.RandomId());
-            
+            GetFillerTitles();
+
             int id = 0;
             ViewBag.id = id;
             id++;
