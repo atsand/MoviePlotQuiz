@@ -64,7 +64,7 @@ namespace MoviePlotQuiz.Controllers
             string title3 = IDs1Controller.RandomTitle();
 
 
-            if (title2 != Session["title"] && title3 != Session["title"] && title2 != title3)
+            if (title2 != title1 && title3 != title1 && title2 != title3)
             {
                 List<string> options = new List<string>() { title1, title2, title3 };
 
@@ -88,7 +88,6 @@ namespace MoviePlotQuiz.Controllers
             {
                 GetFillerTitles();
             }
-
         }
 
         public ActionResult Quiz()
