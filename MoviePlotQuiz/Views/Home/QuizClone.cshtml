@@ -3,27 +3,33 @@
     ViewBag.Title = "Quiz";
         }
 <body style="background-color: silver">
-    <h2>Answer</h2>
+    <h2 style="text-align: center">Answer</h2>
 
-    <p>Question #@ViewBag.id: </p>
-    <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
-    <img style="float: right" src="@Session["poster"]" height="428" width="300">
+    <div class="column" style="width: 30%; float: left">
+        <p>Question #@ViewBag.id: </p>
+        <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
 
-    <p>What movie is this?</p>
+        <p>What movie is this?</p>
 
-    <p id="plot">@Session["plot"]</p>
-    <p>Select an answer</p>
+        <p id="plot">@Session["plot"]</p>
+        <p>Select an answer</p>
 
-    <p>
-        <input type="radio" id="answer1" name="Answer" />  <label id="label1" style="color: forestgreen">Answer 1  </label>
-    </p>
-    <p>
-        <input type="radio" id="answer2" name="Answer" />  <label>Answer 2  </label>
-    </p>
-    <p>
-        <input type="radio" id="answer3" name="Answer" />  <label>Answer 3  </label>
-    </p>
+        <p>
+            <input type="radio" id="answer1" name="Answer" />  <label>@Session["title1"]</label>
+        </p>
+        <p>
+            <input type="radio" id="answer2" name="Answer" />  <label>@Session["title2"] </label>
+        </p>
+        <p>
+            <input type="radio" id="answer3" name="Answer" />  <label>@Session["title3"] </label>
+        </p>
 
-    <p>@Html.ActionLink("Next Question", "Quiz", "Home")</p>
-
+        <p>@Html.ActionLink("Next Question", "Quiz", "Home")</p>
+    </div>
+    <div class="column" style="width: 33%; float:left ">
+        <img style="float: right" src="@Session["poster"]" height="428" width="300">
+    </div>
+    <div class="column" style="float: left; width: 33%; text-align: right">
+        extra movie stuff goes here
+    </div>
 </body>

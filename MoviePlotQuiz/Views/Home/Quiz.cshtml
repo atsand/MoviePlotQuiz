@@ -4,38 +4,41 @@
 }
 
 <body style="background-color: silver">
+    <h2 style="text-align: center">Quiz</h2>
+    <div class="column" style="float: left; width: 31%; ">
 
-    <h2>Quiz</h2>
+        <p>Question #@ViewBag.id: </p>
 
-    <p>Question #@ViewBag.id: </p>
 
-    <img style="float: right" src="~/Content/riddlerQuestion.jpg" height="428" width="300">
+        <p>What movie is this?</p>
 
-    <p>What movie is this?</p>
+        <p id="plot">@Session["plot"]</p>
+        <form action="QuizClone" method="post" class="question">
+            <p>Select an answer</p>
 
-    <p id="plot">@Session["plot"]</p>
-    <form action="QuizClone" method="post" class="question">
-        <p>Select an answer</p>
-
-        <p>
-            <input type="radio" id="answer1" name="Answer" required />  <label id="label1">@Session["title"]  </label>
-        </p>
-        <p>
-            <input type="radio" id="answer2" name="Answer" />  <label>@Session["title2"]  </label>
-        </p>
-        <p>
-            <input type="radio" id="answer3" name="Answer" />  <label>@Session["title3"] </label>
-        </p>
-        <input type="submit" value="Submit" onclick="highlight()">
-    </form>
-
+            <p>
+                <input type="radio" id="answer1" name="Answer" required />  <label id="label1">@Session["title1"]  </label>
+            </p>
+            <p>
+                <input type="radio" id="answer2" name="Answer" />  <label>@Session["title2"]  </label>
+            </p>
+            <p>
+                <input type="radio" id="answer3" name="Answer" />  <label>@Session["title3"] </label>
+            </p>
+            <input type="submit" value="Submit" onclick="highlight()">
+        </form>
+    </div>
+    <div class="column" style="float: left; width: 32%">
+        <img style="float: right" src="~/Content/riddlerQuestion.jpg" height="428" width="300">
+    </div>
+   
     <script>
         function highlight() {
 
             var answer = true;
 
             if (answer == true) {
-                document.getElementById("label1").style.color = "green";
+                document.getElementById("answer3").style.color = "green";
             }
 
         }
