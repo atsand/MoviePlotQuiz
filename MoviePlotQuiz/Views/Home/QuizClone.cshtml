@@ -1,10 +1,10 @@
 ﻿<!--      poster size is 300 x 428  -->
 @{
     ViewBag.Title = "Quiz";
-        }
+}
 <body style="background-color: silver">
     <h2 style="text-align: center">Answer</h2>
-
+    <p onload="highlight()"></p>
     <div class="column" style="width: 30%; float: left">
         <p>Question #@ViewBag.id: </p>
         <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
@@ -15,13 +15,13 @@
         <p>Select an answer</p>
 
         <p>
-            <input type="radio" id="answer1" name="Answer" />  <label>@Session["title1"]</label>
+            <input type="radio" id="answer1" name="Answer" />  <label id="label1">@Session["title1"]</label>
         </p>
         <p>
-            <input type="radio" id="answer2" name="Answer" />  <label>@Session["title2"] </label>
+            <input type="radio" id="answer2" name="Answer" />  <label id="label2">@Session["title2"]</label>
         </p>
         <p>
-            <input type="radio" id="answer3" name="Answer" />  <label>@Session["title3"] </label>
+            <input type="radio" id="answer3" name="Answer" />  <label id="label3">@Session["title3"]</label>
         </p>
 
         <p>@Html.ActionLink("Next Question", "Quiz", "Home")</p>
@@ -29,7 +29,33 @@
     <div class="column" style="width: 33%; float:left ">
         <img style="float: right" src="@Session["poster"]" height="428" width="300">
     </div>
-    <div class="column" style="float: left; width: 33%; text-align: right">
-        extra movie stuff goes here
+    <div class="column" style="float: left; width: 33%; text-align: center">
+        <label>Movie Title:</label><p>@Session["Title"]</p>
+        <label>Released: </label><p>@Session["Released"]</p>
+        <label>Cast: </label><p>@Session["Actors"]</p>
+        <label>Director(s): </label><p>@Session["Director"]</p>
     </div>
+  
+    <script>
+        if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
+            document.getElementById("label1").style.color = "green";
+            document.getElementById("label2").style.color = "grey";
+            document.getElementById("label3").style.color = "grey";
+
+        }
+        if ('@Session["title"].ToString()' == '@Session["title2"].ToString()') {
+            document.getElementById("label2").style.color = "green";
+            document.getElementById("label1").style.color = "grey";
+            document.getElementById("label3").style.color = "grey";
+        }
+        if ('@Session["title"].ToString()' == '@Session["title3"].ToString()') {
+            document.getElementById("label3").style.color = "green";
+            document.getElementById("label1").style.color = "grey";
+            document.getElementById("label2").style.color = "grey";
+        }
+    </script>
 </body>
+
+
+
+
