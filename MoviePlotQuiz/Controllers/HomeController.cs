@@ -44,21 +44,54 @@ namespace MoviePlotQuiz.Controllers
             String data = rd.ReadToEnd();
 
             JObject movie = JObject.Parse(data);
-
            
             Session.Add("title", movie["Title"]);
             Session.Add("released", movie["Released"]);
             Session.Add("actors", movie["Actors"]);
             Session.Add("plot", movie["Plot"]);
             Session.Add("director", movie["Director"]);           
-            Session.Add("poster", movie["Poster"]);
-            
+            Session.Add("poster", movie["Poster"]);           
+        }
+
+        public void GetFillerTitles()
+        {
+            string title1 = Session["title"].ToString();
+            string title2 = IDs1Controller.RandomTitle();
+            string title3 = IDs1Controller.RandomTitle();
+
+
+            if (title2 != Session["title"] && title3 != Session["title"] && title2 != title3)
+            {
+                List<string> options = new List<string>() { title1, title2, title3 };
+
+                Random rnd = new Random();
+                int x = rnd.Next(0, 3);
+                Session.Add("title1", options[x]);
+
+                options.RemoveAt(x);
+
+                int y = rnd.Next(0, 2);
+                Session.Add("title2", options[y]);
+
+                options.RemoveAt(y);
+
+                int z = rnd.Next(0, 1);
+                Session.Add("title3", options[z]);
+
+                options.RemoveAt(z);
+            }
+            else
+            {
+                GetFillerTitles();
+            }
+
         }
 
         public ActionResult Quiz()
         {
             GetMovieData(IDs1Controller.RandomId());
-            
+            GetFillerTitles();
+
             int id = 0;
             ViewBag.id = id;
             id++;
