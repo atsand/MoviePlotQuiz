@@ -240,6 +240,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AaronSandusky.jpg" />
+    <Content Include="Content\AndrewPatenge.jpg" />
     <Content Include="Content\batmanQuestion.jpeg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -250,6 +252,7 @@
     <Content Include="Content\DavidWilkins.jpg" />
     <Content Include="Content\riddlerQuestion.jpg" />
     <Content Include="Content\theater.jpeg" />
+    <Content Include="Content\theater2.jpeg" />
     <Content Include="Content\whySoSerious.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -315,6 +318,8 @@
       <DependentUpon>MovieDB.edmx</DependentUpon>
     </Content>
     <Content Include="Content\David_Wilkins_Resume.pdf" />
+    <Content Include="Content\Aaron_Sandusky_Resume.pdf" />
+    <Content Include="Content\AndrewPatengeResume.pdf" />
     <None Include="Properties\PublishProfiles\Plot-it - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
