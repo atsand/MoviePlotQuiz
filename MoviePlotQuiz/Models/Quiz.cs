@@ -7,10 +7,10 @@ namespace MoviePlotQuiz.Models
 {
     public class Quiz
     {
-        public static double QuestionNum { get; set; }
+        public double QuestionNum { get; set; }
 
-        public static double AnswersCorrect { get; set; }
+        public double AnswersCorrect { get; set; }
 
-        public static double AnswersWrong { get; set; }
+        public double AnswersWrong { get; set; }
     }
 }
