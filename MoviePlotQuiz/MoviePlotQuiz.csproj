@@ -397,14 +397,13 @@
     <Content Include="Web.Config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\QuizStart.cshtml" />
+    <Content Include="Views\Home\QuizPage.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
     <None Include="Web.Release.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
-    <Content Include="Views\Home\Quiz.cshtml" />
     <Content Include="Views\Home\QuizClone.cshtml" />
     <Content Include="Views\Home\Summary.cshtml" />
   </ItemGroup>

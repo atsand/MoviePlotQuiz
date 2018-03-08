@@ -14,6 +14,8 @@ namespace MoviePlotQuiz.Controllers
 {
     public class HomeController : Controller
     {
+        public static Quiz quiz = new Quiz();
+
         public ActionResult Index()
         {
             return View();
@@ -31,6 +33,15 @@ namespace MoviePlotQuiz.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult QuizStart()
+        {
+            //Quiz.QuestionNum = 0;
+            //Quiz.AnswersCorrect = 0;
+            //Quiz.AnswersWrong = 0;
+            quiz = new Quiz();
+            return RedirectToAction("QuizPage");
         }
 
         public void GetMovieData(string id)
@@ -90,26 +101,24 @@ namespace MoviePlotQuiz.Controllers
             }
         }
 
-        public ActionResult Quiz()
+        public ActionResult QuizPage()
         {
             GetMovieData(IDs1Controller.RandomId());
             GetFillerTitles();
            
-            if (Models.Quiz.QuestionNum<10)
+            if (quiz.QuestionNum<10)
             {
-                Models.Quiz.QuestionNum++;
-                Session.Add("QNum", Models.Quiz.QuestionNum);
+                quiz.QuestionNum++;
+                Session.Add("QNum", quiz.QuestionNum);
                 return View();
             }
             else
             {
-                ViewBag.QuestionNum = Models.Quiz.QuestionNum;
-                ViewBag.AnswersCorrect = Models.Quiz.AnswersCorrect;
-                ViewBag.AnswersWrong = Models.Quiz.AnswersWrong;
-                ViewBag.Percent = (Models.Quiz.AnswersCorrect / (Models.Quiz.QuestionNum) * 100);
-                Models.Quiz.QuestionNum = 0;
-                Models.Quiz.AnswersCorrect = 0;
-                Models.Quiz.AnswersWrong = 0;
+                ViewBag.QuestionNum = quiz.QuestionNum;
+                ViewBag.AnswersCorrect = quiz.AnswersCorrect;
+                ViewBag.AnswersWrong = quiz.AnswersWrong;
+                ViewBag.Percent = (quiz.AnswersCorrect / (quiz.QuestionNum) * 100);
+                
                 return View("Summary");
             }
         }
@@ -120,11 +129,11 @@ namespace MoviePlotQuiz.Controllers
 
             if (g.Answer==Session["title"].ToString())
             {
-                Models.Quiz.AnswersCorrect++;
+                quiz.AnswersCorrect++;
             }
             else
             {
-                Models.Quiz.AnswersWrong++;
+                quiz.AnswersWrong++;
             }
 
             return View();
@@ -132,7 +141,7 @@ namespace MoviePlotQuiz.Controllers
 
         public ActionResult Summary()
         {
-            return View();
+            return View(quiz);
         }
     }
 }
