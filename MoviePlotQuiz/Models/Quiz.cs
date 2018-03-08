@@ -12,5 +12,13 @@ namespace MoviePlotQuiz.Models
         public double AnswersCorrect { get; set; }
 
         public double AnswersWrong { get; set; }
+
+        public double Percent;
+
+        public void SetPercent()
+        {
+            this.Percent = (AnswersCorrect / QuestionNum)*100;
+        }
+
     }
 }

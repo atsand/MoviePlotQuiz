@@ -37,9 +37,6 @@ namespace MoviePlotQuiz.Controllers
 
         public ActionResult QuizStart()
         {
-            //Quiz.QuestionNum = 0;
-            //Quiz.AnswersCorrect = 0;
-            //Quiz.AnswersWrong = 0;
             quiz = new Quiz();
             return RedirectToAction("QuizPage");
         }
@@ -108,17 +105,11 @@ namespace MoviePlotQuiz.Controllers
             if (quiz.QuestionNum<10)
             {
                 quiz.QuestionNum++;
-                Session.Add("QNum", quiz.QuestionNum);
-                return View();
+                return View(quiz);
             }
             else
             {
-                ViewBag.QuestionNum = quiz.QuestionNum;
-                ViewBag.AnswersCorrect = quiz.AnswersCorrect;
-                ViewBag.AnswersWrong = quiz.AnswersWrong;
-                ViewBag.Percent = (quiz.AnswersCorrect / (quiz.QuestionNum) * 100);
-                
-                return View("Summary");
+                return RedirectToAction("Summary");
             }
         }
 
@@ -135,11 +126,12 @@ namespace MoviePlotQuiz.Controllers
                 quiz.AnswersWrong++;
             }
 
-            return View();
+            return View(quiz);
         }
 
         public ActionResult Summary()
         {
+            quiz.SetPercent();
             return View(quiz);
         }
     }

@@ -1,4 +1,6 @@
 ﻿<!--      poster size is 300 x 428  -->
+@model MoviePlotQuiz.Models.Quiz
+
 @{
     ViewBag.Title = "Quiz";
 }
@@ -7,7 +9,7 @@
     <h2 style="text-align: center">Quiz</h2>
     <div class="column" style="float: left; width: 31%; ">
 
-        <p>Question #@Session["QNum"]: </p>
+        <p>Question #@Model.QuestionNum: </p>
 
 
         <p>What movie is this?</p>
@@ -17,13 +19,13 @@
             <p>Select an answer</p>
 
             <p>
-                <input type="radio" id="answer1" name="Answer" value="@Session["title1"]" required/> <label for="answer1" id="label1">@Session["title1"]  </label>
+                <input type="radio" id="answer1" name="Answer" value="@Session["title1"]" required /> <label for="answer1" id="label1">@Session["title1"]  </label>
             </p>
             <p>
-                <input type="radio" id="answer2" name="Answer" value="@Session["title2"]"/>  <label for="answer2">@Session["title2"]  </label>
+                <input type="radio" id="answer2" name="Answer" value="@Session["title2"]" />  <label for="answer2">@Session["title2"]  </label>
             </p>
             <p>
-                <input type="radio" id="answer3" name="Answer" value="@Session["title3"]"/>  <label for="answer3">@Session["title3"] </label>
+                <input type="radio" id="answer3" name="Answer" value="@Session["title3"]" />  <label for="answer3">@Session["title3"] </label>
             </p>
             <input type="submit" value="Submit">
         </form>
@@ -31,9 +33,9 @@
     <div class="column" style="float: left; width: 32%">
         <img style="float: right" src="~/Content/riddlerQuestion.jpg" height="428" width="300">
     </div>
-   
-    
-    
+
+
+
 
 
 </body>

@@ -1,4 +1,6 @@
 ﻿<!--      poster size is 300 x 428  -->
+@model MoviePlotQuiz.Models.Quiz
+
 @{
     ViewBag.Title = "Quiz";
 }
@@ -6,7 +8,7 @@
     <h2 style="text-align: center">Answer</h2>
     <p onload="highlight()"></p>
     <div class="column" style="width: 30%; float: left; ">
-        <p>Question #@Session["QNum"]: </p>
+        <p>Question #@Model.QuestionNum: </p>
         <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
 
         <p>What movie is this?</p>
@@ -24,8 +26,7 @@
             <input type="radio" id="answer3" name="Answer" disabled="disabled" />  <label id="label3">@Session["title3"]</label><label id="right3"></label>
         </p>
 
-        <form action="Quiz" method="post" class="answer">
-
+        <form action="QuizPage" method="post" class="answer">
             <input type="submit" value="Next Question" />
         </form>
     </div>
@@ -37,11 +38,11 @@
         <label>Released: </label><p>@Session["Released"]</p>
         <label>Cast: </label><p>@Session["Actors"]</p>
         <label>Director(s): </label><p>@Session["Director"]</p>
-                                    <p style="font-size: large; font-weight: bold">Current Score:</p>
-        <p id="right" style="color: green">Right: @MoviePlotQuiz.Models.Quiz.AnswersCorrect</p>
-        <p id="wrong" style="color: red">Wrong: @MoviePlotQuiz.Models.Quiz.AnswersWrong</p>
+        <p style="font-size: large; font-weight: bold">Current Score:</p>
+        <p id="right" style="color: green">Right: @Model.AnswersCorrect</p>
+        <p id="wrong" style="color: red">Wrong: @Model.AnswersWrong</p>
     </div>
-  
+
     <script>
         if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
             document.getElementById("label1").style.color = "green";
@@ -79,7 +80,7 @@
                 document.getElementById("right2").style.color = "green";
             }
 
-            if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
                 document.getElementById("right3").innerHTML = "  - CORRECT!";
                 document.getElementById("right3").style.color = "green";
             }
