@@ -12,5 +12,8 @@ namespace MoviePlotQuiz.Models
         public static double AnswersCorrect { get; set; }
 
         public static double AnswersWrong { get; set; }
+
+
+       
     }
 }

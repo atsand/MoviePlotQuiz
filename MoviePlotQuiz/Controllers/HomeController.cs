@@ -90,8 +90,10 @@ namespace MoviePlotQuiz.Controllers
             }
         }
 
+        
+
         public ActionResult Quiz()
-        {
+        {           
             GetMovieData(IDs1Controller.RandomId());
             GetFillerTitles();
            
