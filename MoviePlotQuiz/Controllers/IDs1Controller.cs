@@ -13,7 +13,8 @@ namespace MoviePlotQuiz.Controllers
     public class IDs1Controller : Controller
     {
         public static MoviesEntities1 db = new MoviesEntities1();
-        
+        public static List<string> used = new List<string>();
+
         // GET: IDs1
         public ActionResult Index()
         {
@@ -128,17 +129,31 @@ namespace MoviePlotQuiz.Controllers
             base.Dispose(disposing);
         }
 
-        //Pulls random movie ID from database
+        //Pulls random movie ID from database and compares them to previously used IDs
         public static string RandomId()
         {
             Random rnd = new Random();
-            int Rando = rnd.Next(0, 232);
+            int rando = rnd.Next(0, 232);
             ID[] array = db.IDs.ToArray();
+
+            if (used.Count() == 10)
+            {
+                used.Clear();
+            }
 
             try
             {
-                string randomId = array[Rando].ImdbId;
-                return randomId;               
+                string randoId = array[rando].ImdbId;
+
+                if (used.Contains(randoId))
+                {
+                    return RandomId();
+                }
+                else
+                {
+                    used.Add(randoId);
+                    return randoId;
+                }                
             }
             catch (Exception)
             {

@@ -5,7 +5,7 @@
 <body style="background-color: silver">
     <h2 style="text-align: center">Answer</h2>
     <p onload="highlight()"></p>
-    <div class="column" style="width: 30%; float: left">
+    <div class="column" style="width: 30%; float: left; ">
         <p>Question #@Session["QNum"]: </p>
         <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
 
@@ -15,16 +15,19 @@
         <p>Select an answer</p>
 
         <p>
-            <input type="radio" id="answer1" name="Answer" />  <label id="label1">@Session["title1"]</label>
+            <input type="radio" id="answer1" name="Answer" disabled="disabled" />  <label id="label1">@Session["title1"]</label><label id="right1"></label>
         </p>
         <p>
-            <input type="radio" id="answer2" name="Answer" />  <label id="label2">@Session["title2"]</label>
+            <input type="radio" id="answer2" name="Answer" disabled="disabled" />  <label id="label2">@Session["title2"]</label><label id="right2"></label>
         </p>
         <p>
-            <input type="radio" id="answer3" name="Answer" />  <label id="label3">@Session["title3"]</label>
+            <input type="radio" id="answer3" name="Answer" disabled="disabled" />  <label id="label3">@Session["title3"]</label><label id="right3"></label>
         </p>
 
-        <p>@Html.ActionLink("Next Question", "QuizPage", "Home")</p>
+        <form action="Quiz" method="post" class="answer">
+
+            <input type="submit" value="Next Question" />
+        </form>
     </div>
     <div class="column" style="width: 33%; float:left ">
         <img style="float: right" src="@Session["poster"]" height="428" width="300">
@@ -34,27 +37,80 @@
         <label>Released: </label><p>@Session["Released"]</p>
         <label>Cast: </label><p>@Session["Actors"]</p>
         <label>Director(s): </label><p>@Session["Director"]</p>
-        @MoviePlotQuiz.Models.Quiz.AnswersCorrect
-        @MoviePlotQuiz.Models.Quiz.AnswersWrong
+                                    <p style="font-size: large; font-weight: bold">Current Score:</p>
+        <p id="right" style="color: green">Right: @MoviePlotQuiz.Models.Quiz.AnswersCorrect</p>
+        <p id="wrong" style="color: red">Wrong: @MoviePlotQuiz.Models.Quiz.AnswersWrong</p>
     </div>
   
     <script>
         if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
             document.getElementById("label1").style.color = "green";
-            document.getElementById("label2").style.color = "grey";
-            document.getElementById("label3").style.color = "grey";
-
         }
         if ('@Session["title"].ToString()' == '@Session["title2"].ToString()') {
             document.getElementById("label2").style.color = "green";
-            document.getElementById("label1").style.color = "grey";
-            document.getElementById("label3").style.color = "grey";
         }
         if ('@Session["title"].ToString()' == '@Session["title3"].ToString()') {
             document.getElementById("label3").style.color = "green";
-            document.getElementById("label1").style.color = "grey";
-            document.getElementById("label2").style.color = "grey";
         }
+
+        if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+            document.getElementById("answer1").checked = "true";
+        }
+
+        if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+            document.getElementById("answer2").checked = "true";
+        }
+
+        if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+            document.getElementById("answer3").checked = "true";
+        }
+
+        var correct = false;
+
+        if ('@Session["UserAnswer"].ToString()' == '@Session["title"].ToString()') {
+            var correct = true;
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                document.getElementById("right1").innerHTML = "  - CORRECT!";
+                document.getElementById("right1").style.color = "green";
+            }
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                document.getElementById("right2").innerHTML = "  - CORRECT!";
+                document.getElementById("right2").style.color = "green";
+            }
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                document.getElementById("right3").innerHTML = "  - CORRECT!";
+                document.getElementById("right3").style.color = "green";
+            }
+        }
+
+        if (correct == false) {
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                document.getElementById("label1").style.color = "red";
+                document.getElementById("label1").style.textDecoration = "line-through";
+                document.getElementById("right1").innerHTML = "  - WRONG";
+                document.getElementById("right1").style.color = "red";
+            }
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                document.getElementById("label2").style.color = "red";
+                document.getElementById("label2").style.textDecoration = "line-through";
+                document.getElementById("right2").innerHTML = "  - WRONG";
+                document.getElementById("right2").style.color = "red";
+            }
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+                document.getElementById("label3").style.color = "red";
+                document.getElementById("label3").style.textDecoration = "line-through";
+                document.getElementById("right3").innerHTML = "  - WRONG";
+                document.getElementById("right3").style.color = "red";
+            }
+
+
+
+        }
+
+
     </script>
 </body>
 
