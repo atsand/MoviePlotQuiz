@@ -57,36 +57,35 @@ namespace MoviePlotQuiz.Controllers
             Session.Add("poster", movie["Poster"]);
         }
 
+        //fills the buttons with random uniqe titles 
         public void GetFillerTitles()
         {
-            string title1 = Session["title"].ToString();
-            string title2 = IDs1Controller.RandomTitle();
-            string title3 = IDs1Controller.RandomTitle();
+            List<string> options = new List<string>();
+            options.Add(Session["title"].ToString());
 
-
-            if (title2 != title1 && title3 != title1 && title2 != title3)
+            for (int i = 0; i < (3 - 1); i++)
             {
-                List<string> options = new List<string>() { title1, title2, title3 };
+                options.Add(IDs1Controller.RandomTitle());
+            }
 
-                Random rnd = new Random();
-                int x = rnd.Next(0, 3);
-                Session.Add("title1", options[x]);
-
-                options.RemoveAt(x);
-
-                int y = rnd.Next(0, 2);
-                Session.Add("title2", options[y]);
-
-                options.RemoveAt(y);
-
-                int z = rnd.Next(0, 1);
-                Session.Add("title3", options[z]);
-
-                options.RemoveAt(z);
+            if (options.Count() != options.Distinct().Count())
+            {
+                GetFillerTitles();
             }
             else
             {
-                GetFillerTitles();
+                Random rnd = new Random();
+                int j = 3;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    int x = rnd.Next(0, j);
+
+                    Session.Add("title" + (i + 1), options[x]);
+
+                    options.RemoveAt(x);
+                    j--;
+                }
             }
         }
 
