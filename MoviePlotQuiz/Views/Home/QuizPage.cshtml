@@ -1,4 +1,4 @@
-﻿<!--      poster size is 300 x 428  -->
+﻿<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
 @model MoviePlotQuiz.Models.Quiz
 
 @{
@@ -11,7 +11,6 @@
 
         <p>Question #@Model.QuestionNum: </p>
 
-
         <p>What movie is this?</p>
 
         <p id="plot">@Session["plot"]</p>
@@ -19,7 +18,7 @@
             <p>Select an answer</p>
 
             <p>
-                <input type="radio" id="answer1" name="Answer" value="@Session["title1"]" required /> <label for="answer1" id="label1">@Session["title1"]  </label>
+                <input type="radio" id="answer1" name="Answer" value="@Session["title1"]" required /> <label for="answer1">@Session["title1"]  </label>
             </p>
             <p>
                 <input type="radio" id="answer2" name="Answer" value="@Session["title2"]" />  <label for="answer2">@Session["title2"]  </label>

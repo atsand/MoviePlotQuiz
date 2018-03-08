@@ -83,16 +83,14 @@ namespace MoviePlotQuiz.Controllers
             else
             {
                 Random rnd = new Random();
-                int j = 3;
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < options.Count(); i++)
                 {
-                    int x = rnd.Next(0, j);
+                    int x = rnd.Next(0, options.Count());
 
                     Session.Add("title" + (i + 1), options[x]);
 
                     options.RemoveAt(x);
-                    j--;
                 }
             }
         }
