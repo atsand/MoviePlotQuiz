@@ -221,7 +221,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MovieDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\MovieModel.cs" />
+    <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Movies.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

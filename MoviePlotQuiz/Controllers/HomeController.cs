@@ -65,7 +65,7 @@ namespace MoviePlotQuiz.Controllers
             Session.Add("poster", movie["Poster"]);
         }
 
-        //fills the buttons with random uniqe titles 
+        //fills the buttons with random unique titles 
         public void GetFillerTitles()
         {
             List<string> options = new List<string>();
@@ -84,7 +84,7 @@ namespace MoviePlotQuiz.Controllers
             {
                 Random rnd = new Random();
 
-                for (int i = 0; i < options.Count(); i++)
+                for (int i = 0; i < 3; i++)
                 {
                     int x = rnd.Next(0, options.Count());
 
