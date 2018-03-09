@@ -18,12 +18,12 @@ namespace MoviePlotQuiz.Controllers
         // GET: IDs1
         public ActionResult Index()
         {
-            
+
             return View(db.IDs.ToList());
 
         }
-    
-      
+
+
 
         // GET: IDs1/Details/5
         public ActionResult Details(int? id)
@@ -143,17 +143,24 @@ namespace MoviePlotQuiz.Controllers
 
             try
             {
-                string randoId = array[rando].ImdbId;
-
-                if (used.Contains(randoId))
+                if (array[rando].Genre.Contains(""))
                 {
-                    return RandomId();
+                    string randoId = array[rando].ImdbId;
+
+                    if (used.Contains(randoId))
+                    {
+                        return RandomId();
+                    }
+                    else
+                    {
+                        used.Add(randoId);
+                        return randoId;
+                    }
                 }
                 else
                 {
-                    used.Add(randoId);
-                    return randoId;
-                }                
+                    return RandomId();
+                }
             }
             catch (Exception)
             {
@@ -170,8 +177,15 @@ namespace MoviePlotQuiz.Controllers
 
             try
             {
-                string randomTitle = array[Rando].Title;
-                return randomTitle;
+                if (array[Rando].Genre.Contains(""))
+                {
+                    string randomTitle = array[Rando].Title;
+                    return randomTitle;
+                }
+                else
+                {
+                    return RandomTitle();
+                }
             }
             catch (Exception)
             {
