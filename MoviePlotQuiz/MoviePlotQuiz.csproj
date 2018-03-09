@@ -252,7 +252,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DavidWilkins.jpg" />
+    <Content Include="Content\leftCurtain.jpeg" />
     <Content Include="Content\riddlerQuestion.jpg" />
+    <Content Include="Content\rightCurtain.jpeg" />
+    <Content Include="Content\screen.jpeg" />
     <Content Include="Content\theater.jpeg" />
     <Content Include="Content\theater2.jpeg" />
     <Content Include="Content\whySoSerious.jpg" />
