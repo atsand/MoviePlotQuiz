@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "QuizOptions";
+}
+
+<h2>Select Quiz Options</h2>
+<body style="background-color: silver">
+
+    <form action="QuizStart" method="post" class="options">
+
+        <p>
+            <input id="easy" type="radio" name="Difficulty" value="3" required />  <label for="easy">Easy</label>
+        </p>
+        <p>
+            <input id="medium" type="radio" name="Difficulty" value="5" checked="checked" />  <label for="medium">Medium</label>
+        </p>
+        <p>
+            <input id="hard" type="radio" name="Difficulty" value="10" />  <label for="hard">Hard</label>
+        </p>
+
+        <select name="Genre">
+            <option value="All">All Genres</option>
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Horror">Horror</option>
+            <option value="Drama">Drama</option>
+            <option value="Crime">Crime</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Animation">Animation</option>
+            <option value="Adventure">Adventure</option>
+        </select>
+
+        <br />
+        <br />
+        <p>
+            <input type="number" name="QuestionCount" value="10" step="5" min="5" max="25" />
+        </p>
+
+        <input type="submit" name="submitOptions" value="Start New Quiz" />
+    </form>
+
+
+</body>

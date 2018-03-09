@@ -8,6 +8,17 @@
     <h2>Summary of Quiz Results</h2>
 
     <label>Questions answered: @Model.QuestionNum | Right: @Model.AnswersCorrect | Wrong: @Model.AnswersWrong | Percent: @Model.Percent%</label>
+    <br />
+    <br />
+    <form action="QuizStart" method="post" class="toNewQuiz">
+        <input type="submit" value="Start New Quiz" />
+    </form>
+    <br />
+    <br />
+    <form action="Index" method="post" class="toHome">
+        <input type="submit" value="Go to Home Page" />
+    </form>
+
 </body>
 
 
