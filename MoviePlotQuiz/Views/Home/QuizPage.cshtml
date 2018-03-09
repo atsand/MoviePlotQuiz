@@ -16,16 +16,13 @@
         <p id="plot">@Session["plot"]</p>
         <form action="QuizClone" method="post" class="question">
             <p>Select an answer</p>
+            @for (int i = 1; i < 3 + 1; i++)
+            {
+                <p>
+                    <input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required /> <label for="answer @i">@Session["title" + i]  </label>
+                </p>
+            }
 
-            <p>
-                <input type="radio" id="answer1" name="Answer" value="@Session["title1"]" required /> <label for="answer1">@Session["title1"]  </label>
-            </p>
-            <p>
-                <input type="radio" id="answer2" name="Answer" value="@Session["title2"]" />  <label for="answer2">@Session["title2"]  </label>
-            </p>
-            <p>
-                <input type="radio" id="answer3" name="Answer" value="@Session["title3"]" />  <label for="answer3">@Session["title3"] </label>
-            </p>
             <input type="submit" value="Submit">
         </form>
     </div>

@@ -15,15 +15,33 @@
         <p id="plot">@Session["plot"]</p>
         <p>Select an answer</p>
 
-        <p>
-            <input type="radio" id="answer1" name="Answer" disabled="disabled" />  <label id="label1">@Session["title1"]</label><label id="right1"></label>
-        </p>
-        <p>
-            <input type="radio" id="answer2" name="Answer" disabled="disabled" />  <label id="label2">@Session["title2"]</label><label id="right2"></label>
-        </p>
-        <p>
-            <input type="radio" id="answer3" name="Answer" disabled="disabled" />  <label id="label3">@Session["title3"]</label><label id="right3"></label>
-        </p>
+        @for (int i = 1; i < 3 + 1; i++)
+        {
+            <p>
+                @if (Session["title"].ToString() == Session["title" + i].ToString())
+                {
+                    if (Session["UserAnswer"].ToString() == Session["title"].ToString())
+                    {
+                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="color: green" id="label @i">@Session["title" + i]</label><label style="color: green" id="right @i">  - CORRECT!</label>
+                    }
+                    else
+                    {
+                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="color: green" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
+                    }
+
+                }
+                else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
+                {
+                    <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="color: red; text-decoration: line-through" id="label @i">@Session["title" + i]</label><label style="color: red" id="right @i">  - WRONG</label>
+                }
+                else
+                {
+                    string color = "color: black";
+
+                    <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="@color" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
+                }
+            </p>
+        }
 
         <form action="QuizPage" method="post" class="answer">
             <input type="submit" value="Next Question" />
@@ -42,76 +60,77 @@
         <p id="wrong" style="color: red">Wrong: @Model.AnswersWrong</p>
     </div>
 
-    <script>
-        if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
-            document.getElementById("label1").style.color = "green";
-        }
-        if ('@Session["title"].ToString()' == '@Session["title2"].ToString()') {
-            document.getElementById("label2").style.color = "green";
-        }
-        if ('@Session["title"].ToString()' == '@Session["title3"].ToString()') {
-            document.getElementById("label3").style.color = "green";
-        }
+    @*<script>
 
-        if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
-            document.getElementById("answer1").checked = "true";
-        }
+            if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
+                document.getElementById("label 1").style.color = "green";
+            }
+            if ('@Session["title"].ToString()' == '@Session["title2"].ToString()') {
+                document.getElementById("label 2").style.color = "green";
+            }
+            if ('@Session["title"].ToString()' == '@Session["title3"].ToString()') {
+                document.getElementById("label 3").style.color = "green";
+            }
 
-        if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
-            document.getElementById("answer2").checked = "true";
-        }
-
-        if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
-            document.getElementById("answer3").checked = "true";
-        }
-
-        var correct = false;
-
-        if ('@Session["UserAnswer"].ToString()' == '@Session["title"].ToString()') {
-            var correct = true;
             if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
-                document.getElementById("right1").innerHTML = "  - CORRECT!";
-                document.getElementById("right1").style.color = "green";
+                document.getElementById("answer 1").checked = "true";
             }
 
             if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
-                document.getElementById("right2").innerHTML = "  - CORRECT!";
-                document.getElementById("right2").style.color = "green";
+                document.getElementById("answer 2").checked = "true";
             }
 
             if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
-                document.getElementById("right3").innerHTML = "  - CORRECT!";
-                document.getElementById("right3").style.color = "green";
-            }
-        }
-
-        if (correct == false) {
-            if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
-                document.getElementById("label1").style.color = "red";
-                document.getElementById("label1").style.textDecoration = "line-through";
-                document.getElementById("right1").innerHTML = "  - WRONG";
-                document.getElementById("right1").style.color = "red";
+                document.getElementById("answer 3").checked = "true";
             }
 
-            if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
-                document.getElementById("label2").style.color = "red";
-                document.getElementById("label2").style.textDecoration = "line-through";
-                document.getElementById("right2").innerHTML = "  - WRONG";
-                document.getElementById("right2").style.color = "red";
+            var correct = false;
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title"].ToString()') {
+                var correct = true;
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                    document.getElementById("right 1").innerHTML = "  - CORRECT!";
+                    document.getElementById("right 1").style.color = "green";
+                }
+
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                    document.getElementById("right 2").innerHTML = "  - CORRECT!";
+                    document.getElementById("right 2").style.color = "green";
+                }
+
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+                    document.getElementById("right 3").innerHTML = "  - CORRECT!";
+                    document.getElementById("right 3").style.color = "green";
+                }
             }
-            if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
-                document.getElementById("label3").style.color = "red";
-                document.getElementById("label3").style.textDecoration = "line-through";
-                document.getElementById("right3").innerHTML = "  - WRONG";
-                document.getElementById("right3").style.color = "red";
+
+            if (correct == false) {
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                    document.getElementById("label 1").style.color = "red";
+                    document.getElementById("label 1").style.textDecoration = "line-through";
+                    document.getElementById("right 1").innerHTML = "  - WRONG";
+                    document.getElementById("right 1").style.color = "red";
+                }
+
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                    document.getElementById("label 2").style.color = "red";
+                    document.getElementById("label 2").style.textDecoration = "line-through";
+                    document.getElementById("right 2").innerHTML = "  - WRONG";
+                    document.getElementById("right 2").style.color = "red";
+                }
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+                    document.getElementById("label 3").style.color = "red";
+                    document.getElementById("label 3").style.textDecoration = "line-through";
+                    document.getElementById("right 3").innerHTML = "  - WRONG";
+                    document.getElementById("right 3").style.color = "red";
+                }
+
+
+
             }
 
 
-
-        }
-
-
-    </script>
+        </script>*@
 </body>
 
 
