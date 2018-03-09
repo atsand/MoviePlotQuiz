@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MoviePlotQuiz.Models
 {
-    public class MovieModel
+    public class Movie
     {
         public string imdbID { get; set; }
 
@@ -18,5 +18,9 @@ namespace MoviePlotQuiz.Models
         public string Actors { get; set; }
 
         public string Poster { get; set; }
+
+        public string Released { get; set; }
+
+        public string Genre { get; set; }
     }
 }
