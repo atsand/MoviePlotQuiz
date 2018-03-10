@@ -15,9 +15,10 @@
             <input id="medium" type="radio" name="Difficulty" value="5" checked="checked" />  <label for="medium">Medium</label>
         </p>
         <p>
-            <input id="hard" type="radio" name="Difficulty" value="10" />  <label for="hard">Hard</label>
+            <input id="hard" type="radio"; name="Difficulty" value="10" />  <label for="hard">Hard</label>
         </p>
 
+        <p>Select a genre</p>
         <select name="Genre">
             <option value="All">All Genres</option>
             <option value="Action">Action</option>
@@ -32,10 +33,29 @@
 
         <br />
         <br />
+        <p>Select the number of questions on the quiz</p>
         <p>
             <input type="number" name="QuestionCount" value="10" step="5" min="5" max="25" />
         </p>
 
+        <!--  need to get this only to fire off WHEN hard mode is selected.  -->
+        <script>
+            var hint = document.getElementById("hard").checked;      
+                if (hint == true) {
+                    @{ string off = "disabled=\"disabled\"";}
+                }
+        </script>
+
+
+        <br />
+        <p>Enable Hints?</p>
+        <p>
+            <input type="radio" name="hints" value="1" id="on" class="hintButtons" @off />  <label for="on">Hints On</label>
+        </p>
+        <p>
+            <input type="radio" name="hints" value="2" id="off" class="hintButtons" @off />  <label for="off">Hints Off</label>
+        </p>
+        <br />
         <input type="submit" name="submitOptions" value="Start New Quiz" />
     </form>
 
