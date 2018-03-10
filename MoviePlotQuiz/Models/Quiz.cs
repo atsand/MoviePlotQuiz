@@ -7,7 +7,7 @@ namespace MoviePlotQuiz.Models
 {
     public class Quiz
     {
-        public double QuestionNum { get; set; }
+        public int QuestionNum { get; set; }
 
         public double AnswersCorrect { get; set; }
 
@@ -21,10 +21,14 @@ namespace MoviePlotQuiz.Models
 
         public int QuestionCount { get; set; }
 
+        public List<Movie> movieList;
+        
         public void SetPercent()
         {
             this.Percent = (AnswersCorrect / QuestionNum)*100;
         }
+
+        public List<string> fillerList;
 
     }
 }

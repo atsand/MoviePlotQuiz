@@ -130,26 +130,40 @@ namespace MoviePlotQuiz.Controllers
         }
 
         //Pulls random movie ID from database and compares them to previously used IDs
-        public static string RandomId()
+        public static string RandomId(Quiz quiz)
         {
             Random rnd = new Random();
             int rando = rnd.Next(0, 232);
             ID[] array = db.IDs.ToArray();
 
-            if (used.Count() == 10)
+            if (used.Count() == quiz.QuestionCount)
             {
                 used.Clear();
             }
 
             try
             {
-                if (array[rando].Genre.Contains(""))
+                if (quiz.Genre == "All")
                 {
                     string randoId = array[rando].ImdbId;
 
                     if (used.Contains(randoId))
                     {
-                        return RandomId();
+                        return RandomId(quiz);
+                    }
+                    else
+                    {
+                        used.Add(randoId);
+                        return randoId;
+                    }
+                }
+                else if (array[rando].Genre.Contains(quiz.Genre))
+                {
+                    string randoId = array[rando].ImdbId;
+
+                    if (used.Contains(randoId))
+                    {
+                        return RandomId(quiz);
                     }
                     else
                     {
@@ -159,37 +173,54 @@ namespace MoviePlotQuiz.Controllers
                 }
                 else
                 {
-                    return RandomId();
+                    return RandomId(quiz);
                 }
             }
             catch (Exception)
             {
-                return RandomId();
+                return RandomId(quiz);
             }
         }
 
-        //Pulls random movie Title from database
-        public static string RandomTitle()
+        //Returns list of filler movie titles matching chosen genre
+        public static List<string> FillerTitleList(Quiz quiz)
         {
-            Random rnd = new Random();
-            int Rando = rnd.Next(0, 232);
-            ID[] array = db.IDs.ToArray();
+            //Random rnd = new Random();
+            //int Rando = rnd.Next(0, 232);
+            //ID[] array = db.IDs.ToArray();
+            List<string> fillerTitles = new List<string>();
 
             try
             {
-                if (array[Rando].Genre.Contains(""))
+
+                foreach (ID id in db.IDs)
                 {
-                    string randomTitle = array[Rando].Title;
-                    return randomTitle;
+                    if (quiz.Genre == "All")
+                    {
+                        fillerTitles.Add(id.Title);
+                    }
+                    else 
+                    {
+                        if (id.Genre.Contains(quiz.Genre))
+                        {
+                            fillerTitles.Add(id.Title);
+                        }
+                    }
                 }
-                else
-                {
-                    return RandomTitle();
-                }
+                return fillerTitles;
+                //if (array[Rando].Genre.Contains(quiz.Genre))
+                //{
+                //    string randomTitle = array[Rando].Title;
+                //    return randomTitle;
+                //}
+                //else
+                //{
+                //    return RandomTitle(quiz);
+                //}
             }
             catch (Exception)
             {
-                return RandomTitle();
+                return FillerTitleList(quiz);
             }
         }
     }
