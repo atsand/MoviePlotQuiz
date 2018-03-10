@@ -47,8 +47,12 @@
             <input type="submit" value="Next Question" />
         </form>
     </div>
-    <div class="column" style="width: 33%; float:left ">
-        <img style="float: right" src="@Session["poster"]" height="428" width="300">
+    <div class="column" style="width: 33%; float: left ">
+        <!--       <div class="panel" style="transition: all 10s ease-out">
+             <img src="~/Content/leftCurtain" style="z-index: 2; float:left; transform:translateX(-100%)" />
+              <img src="~/Content/rightCurtain" style="z-index:2; float:left; transform: translateX(100%)" /> -->
+        <img style="float: right; z-index:1 " src="@Session["poster"]" height="428" width="300">
+   <!-- </div> -->
     </div>
     <div class="column" style="float: left; width: 33%; text-align: center">
         <label>Movie Title:</label><p>@Session["Title"]</p>
