@@ -12,17 +12,17 @@
 
         <p>What movie is this?</p>
 
-        <p id="plot">@Session["plot"]</p>
+        <p id="plot">@Model.movieList[@Model.QuestionNum-1].Plot</p>
         <p>Select an answer</p>
 
-        @for (int i = 1; i < 3 + 1; i++)
+        @for (int i = 1; i < @Model.Difficulty + 1; i++)
         {
             <p>
-                @if (Session["title"].ToString() == Session["title" + i].ToString())
+                @if (@Model.movieList[@Model.QuestionNum - 1].Title == Session["title" + i].ToString())
                 {
-                    if (Session["UserAnswer"].ToString() == Session["title"].ToString())
+                    if (Session["UserAnswer"].ToString() == @Model.movieList[@Model.QuestionNum - 1].Title)
                     {
-                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="color: green" id="label @i">@Session["title" + i]</label><label style="color: green" id="right @i">  - CORRECT!</label>
+                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked/> <label style="color: green" id="label @i">@Session["title" + i]</label><label style="color: green" id="right @i">  - CORRECT!</label>
                     }
                     else
                     {
@@ -32,7 +32,7 @@
                 }
                 else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
                 {
-                    <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="color: red; text-decoration: line-through" id="label @i">@Session["title" + i]</label><label style="color: red" id="right @i">  - WRONG</label>
+                    <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked/> <label style="color: red; text-decoration: line-through" id="label @i">@Session["title" + i]</label><label style="color: red" id="right @i">  - WRONG</label>
                 }
                 else
                 {
@@ -48,13 +48,13 @@
         </form>
     </div>
     <div class="column" style="width: 33%; float:left ">
-        <img style="float: right" src="@Session["poster"]" height="428" width="300">
+        <img style="float: right" src="@Model.movieList[@Model.QuestionNum-1].Poster" height="428" width="300">
     </div>
     <div class="column" style="float: left; width: 33%; text-align: center">
-        <label>Movie Title:</label><p>@Session["Title"]</p>
-        <label>Released: </label><p>@Session["Released"]</p>
-        <label>Cast: </label><p>@Session["Actors"]</p>
-        <label>Director(s): </label><p>@Session["Director"]</p>
+        <label>Movie Title:</label><p>@Model.movieList[@Model.QuestionNum - 1].Title</p>
+        <label>Released: </label><p>@Model.movieList[@Model.QuestionNum - 1].Released</p>
+        <label>Cast: </label><p>@Model.movieList[@Model.QuestionNum - 1].Actors</p>
+        <label>Director(s): </label><p>@Model.movieList[@Model.QuestionNum - 1].Director</p>
         <p style="font-size: large; font-weight: bold">Current Score:</p>
         <p id="right" style="color: green">Right: @Model.AnswersCorrect</p>
         <p id="wrong" style="color: red">Wrong: @Model.AnswersWrong</p>

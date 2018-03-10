@@ -10,11 +10,17 @@ using MoviePlotQuiz.Models;
 using System.Configuration;
 using System.Web.Configuration;
 
+
+//Need to make the GetFillerTitles make a list of enough filler titles to make the quiz since it will be done once at the start.
+//We need to find a way to pass one movie object and enough filler titles to the view to fill the page.
+//We must then remove the movie object from the list.
+//Must make sure the chosen filler titles don't match the chosen title.
 namespace MoviePlotQuiz.Controllers
 {
     public class HomeController : Controller
     {
         public static Quiz quiz = new Quiz();
+        public static List<Movie> movieList = new List<Movie>();
 
         public ActionResult Index()
         {
@@ -35,73 +41,103 @@ namespace MoviePlotQuiz.Controllers
             return View();
         }
 
-        public ActionResult QuizStart()
+        public ActionResult QuizStart(Options options)
         {
             quiz = new Quiz();
+            quiz.Genre = options.Genre;
+            quiz.Difficulty = options.Difficulty;
+            quiz.QuestionCount = options.QuestionCount;
+            List<string> titleList = new List<string>();
+            quiz.fillerList = IDs1Controller.FillerTitleList(quiz);
+
+            for (int i = 0; i < quiz.QuestionCount; i++)
+            {
+                titleList.Add(IDs1Controller.RandomId(quiz));
+
+            }
+
+            GetMovieData(titleList);
+
+
             return RedirectToAction("QuizPage");
         }
 
-        public void GetMovieData(string id)
+        public void GetMovieData(List<string> idList)
         {
-            string key = WebConfigurationManager.AppSettings["MovieAPIKey"];
+            quiz.movieList = new List<Movie>();
 
-            HttpWebRequest request = WebRequest.CreateHttp(String.Format("http://www.omdbapi.com/?apikey=" + key + "&i=" + id));
+            foreach (string id in idList)
+            {
 
-            request.UserAgent = @"User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36";
+                string key = WebConfigurationManager.AppSettings["MovieAPIKey"];
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                HttpWebRequest request = WebRequest.CreateHttp(String.Format("http://www.omdbapi.com/?apikey=" + key + "&i=" + id));
 
-            StreamReader rd = new StreamReader(response.GetResponseStream());
+                request.UserAgent = @"User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36";
 
-            String data = rd.ReadToEnd();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            JObject movie = JObject.Parse(data);
-           
-            Session.Add("title", movie["Title"]);
-            Session.Add("released", movie["Released"]);
-            Session.Add("actors", movie["Actors"]);
-            Session.Add("plot", movie["Plot"]);
-            Session.Add("director", movie["Director"]);           
-            Session.Add("poster", movie["Poster"]);
+                StreamReader rd = new StreamReader(response.GetResponseStream());
+
+                String data = rd.ReadToEnd();
+
+                JObject movieJObject = JObject.Parse(data);
+
+                Movie movie = movieJObject.ToObject<Movie>();
+
+                quiz.movieList.Add(movie);
+
+                //Session.Add("title", movie["Title"]);
+                //Session.Add("released", movie["Released"]);
+                //Session.Add("actors", movie["Actors"]);
+                //Session.Add("plot", movie["Plot"]);
+                //Session.Add("director", movie["Director"]);
+                //Session.Add("poster", movie["Poster"]);
+            }
         }
 
         //fills the buttons with random unique titles 
-        public void GetFillerTitles()
+        //need to make a list of all movies that match the genre picked(not just for one question)
+        public List<string> GetFillerTitles(List<string> fillerOptions)
         {
             List<string> options = new List<string>();
-            options.Add(Session["title"].ToString());
+            options.Add(quiz.movieList[quiz.QuestionNum].Title);
 
-            for (int i = 0; i < (3 - 1); i++)
-            {
-                options.Add(IDs1Controller.RandomTitle());
-            }
+            Random rng = new Random();
 
-            if (options.Count() != options.Distinct().Count())
+            while (options.Count()<quiz.Difficulty)
             {
-                GetFillerTitles();
-            }
-            else
-            {
-                Random rnd = new Random();
+                int random = rng.Next(0, fillerOptions.Count());
 
-                for (int i = 0; i < 3; i++)
+                if (!options.Contains(fillerOptions[random]))
                 {
-                    int x = rnd.Next(0, options.Count());
-
-                    Session.Add("title" + (i + 1), options[x]);
-
-                    options.RemoveAt(x);
+                    options.Add(fillerOptions[random]);
                 }
+            }
+
+            return options;
+        }
+
+        public void SetQuestionSessions(List<string> options)
+        {
+            
+            Random rnd = new Random();
+
+            for (int i = 0; i < quiz.Difficulty; i++)
+            {
+                int x = rnd.Next(0, options.Count());
+
+                Session.Add("title" + (i + 1), options[x]);
+
+                options.RemoveAt(x);
             }
         }
 
         public ActionResult QuizPage()
         {
-            GetMovieData(IDs1Controller.RandomId());
-            GetFillerTitles();
-           
-            if (quiz.QuestionNum<10)
+            if (quiz.QuestionNum<quiz.QuestionCount)
             {
+                SetQuestionSessions(GetFillerTitles(quiz.fillerList));
                 quiz.QuestionNum++;
                 return View(quiz);
             }
@@ -115,7 +151,7 @@ namespace MoviePlotQuiz.Controllers
         {
             Session.Add("UserAnswer", g.Answer.ToString());
 
-            if (g.Answer==Session["title"].ToString())
+            if (g.Answer== quiz.movieList[quiz.QuestionNum - 1].Title)
             {
                 quiz.AnswersCorrect++;
             }
@@ -135,7 +171,6 @@ namespace MoviePlotQuiz.Controllers
 
         public ActionResult QuizOptions()
         {
-            
             return View();
         }
     }
