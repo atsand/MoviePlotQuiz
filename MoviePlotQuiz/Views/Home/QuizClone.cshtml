@@ -5,61 +5,61 @@
     ViewBag.Title = "Quiz";
 }
 <body style="background-color: silver">
-    <h2 style="text-align: center">Answer</h2>
-    <p onload="highlight()"></p>
-    <div class="column" style="width: 30%; float: left; ">
-        <p>Question #@Model.QuestionNum: </p>
+    <p style="font-size:3vw; text-align: center">Answer</p>
+    <div class="row">
+        <div class="col-sm-4" style="">
+            <p style="font-size:2.6vw; font-weight:bold ">Question #@Model.QuestionNum: </p>
 
-        <p>What movie is this?</p>
+            <p style="font-size:1.8vw; font-weight:bold">What movie is this?</p>
 
-        <p id="plot">@Model.movieList[@Model.QuestionNum-1].Plot</p>
-        <p>Select an answer</p>
+            <p style="font-size:1.8vw; font-style:italic" id="plot">@Model.movieList[@Model.QuestionNum - 1].Plot</p>
+            <p style="font-size:1.6vw; text-decoration:underline">Select an answer</p>
 
-        @for (int i = 1; i < @Model.Difficulty + 1; i++)
-        {
-            <p>
-                @if (@Model.movieList[@Model.QuestionNum - 1].Title == Session["title" + i].ToString())
-                {
-                    if (Session["UserAnswer"].ToString() == @Model.movieList[@Model.QuestionNum - 1].Title)
+            @for (int i = 1; i < @Model.Difficulty + 1; i++)
+            {
+                <p>
+                    @if (@Model.movieList[@Model.QuestionNum - 1].Title == Session["title" + i].ToString())
                     {
-                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked/> <label style="color: green" id="label @i">@Session["title" + i]</label><label style="color: green" id="right @i">  - CORRECT!</label>
+                        if (Session["UserAnswer"].ToString() == @Model.movieList[@Model.QuestionNum - 1].Title)
+                        {
+                            <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked /> <label style="font-size:1.6vw; color: green" id="label @i">@Session["title" + i]</label><label style="font-size:1.6vw; color: green" id="right @i">  - CORRECT!</label>
+                        }
+                        else
+                        {
+                            <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="font-size:1.6vw; color: green" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
+                        }
+
+                    }
+                    else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
+                    {
+                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked /> <label style="font-size:1.6vw; color: red; text-decoration: line-through" id="label @i">@Session["title" + i]</label><label style="font-size:1.6vw; color: red" id="right @i">  - WRONG</label>
                     }
                     else
                     {
-                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="color: green" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
+                        string color = "color: black";
+
+                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="font-size:1.6vw; @color" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
                     }
+                </p>
+            }
 
-                }
-                else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
-                {
-                    <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked/> <label style="color: red; text-decoration: line-through" id="label @i">@Session["title" + i]</label><label style="color: red" id="right @i">  - WRONG</label>
-                }
-                else
-                {
-                    string color = "color: black";
-
-                    <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="@color" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
-                }
-            </p>
-        }
-
-        <form action="QuizPage" method="post" class="answer">
-            <input type="submit" value="Next Question" />
-        </form>
+            <form action="QuizPage" method="post" class="answer">
+                <input style="font-size:1.5vw" type="submit" value="Next Question" />
+            </form>
+        </div>
+        <div class="col-sm-4" style="">
+            <img class="img-responsive" style="width:90%; margin:auto" src="@Model.movieList[@Model.QuestionNum-1].Poster" />
+        </div>
+        <div class="col-sm-4" style="font-size:1.5vw" text-align: center>
+            <label>Movie Title:</label><p>@Model.movieList[@Model.QuestionNum - 1].Title</p>
+            <label>Released: </label><p>@Model.movieList[@Model.QuestionNum - 1].Released</p>
+            <label>Cast: </label><p>@Model.movieList[@Model.QuestionNum - 1].Actors</p>
+            <label>Director(s): </label><p>@Model.movieList[@Model.QuestionNum - 1].Director</p>
+            <p style="font-weight: bold">Current Score:</p>
+            <p id="right" style="color: green">Right: @Model.AnswersCorrect</p>
+            <p id="wrong" style="color: red">Wrong: @Model.AnswersWrong</p>
+        </div>
     </div>
-    <div class="column" style="width: 33%; float:left ">
-        <img style="float: right" src="@Model.movieList[@Model.QuestionNum-1].Poster" height="428" width="300">
-    </div>
-    <div class="column" style="float: left; width: 33%; text-align: center">
-        <label>Movie Title:</label><p>@Model.movieList[@Model.QuestionNum - 1].Title</p>
-        <label>Released: </label><p>@Model.movieList[@Model.QuestionNum - 1].Released</p>
-        <label>Cast: </label><p>@Model.movieList[@Model.QuestionNum - 1].Actors</p>
-        <label>Director(s): </label><p>@Model.movieList[@Model.QuestionNum - 1].Director</p>
-        <p style="font-size: large; font-weight: bold">Current Score:</p>
-        <p id="right" style="color: green">Right: @Model.AnswersCorrect</p>
-        <p id="wrong" style="color: red">Wrong: @Model.AnswersWrong</p>
-    </div>
-
     @*<script>
 
             if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
