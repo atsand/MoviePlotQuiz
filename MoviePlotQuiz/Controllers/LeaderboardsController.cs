@@ -12,12 +12,33 @@ namespace MoviePlotQuiz.Controllers
 {
     public class LeaderboardsController : Controller
     {
-        private LeaderboardEntities db = new LeaderboardEntities();
+        //DAVID - do NOT make static.
+        public LeaderboardEntities db = new LeaderboardEntities();
+
+      
+        //DAVID
+        //added method to add a LeaderboardModel object to the db, then save 
+        public ActionResult AddScores(Leaderboard leader)
+        {
+            if (leader != null)
+            {
+                db.Leaderboards.Add(leader);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
 
         // GET: Leaderboards
         public ActionResult Index()
-        {
-            return View(db.Leaderboards.ToList());
+        {   
+            //LINQ
+            /*var x = from l in db.Leaderboards
+                    orderby l.Score descending
+                    select l;
+            */
+            return View(db.Leaderboards.OrderByDescending(l => l.Score).ToList());
         }
 
         // GET: Leaderboards/Details/5

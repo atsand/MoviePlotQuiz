@@ -209,6 +209,7 @@
     <Compile Include="Models\Leaderboard.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeaderboardModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -444,6 +445,8 @@
     <Content Include="Views\Leaderboards\Details.cshtml" />
     <Content Include="Views\Leaderboards\Edit.cshtml" />
     <Content Include="Views\Leaderboards\Index.cshtml" />
+    <Content Include="Views\Home\AddScore.cshtml" />
+    <Content Include="Views\Leaderboards\Display.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

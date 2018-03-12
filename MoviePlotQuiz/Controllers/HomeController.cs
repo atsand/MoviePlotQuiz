@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using MoviePlotQuiz.Models;
 using System.Configuration;
 using System.Web.Configuration;
-
+using MoviePlotQuiz.Controllers;
 
 //Need to make the GetFillerTitles make a list of enough filler titles to make the quiz since it will be done once at the start.
 //We need to find a way to pass one movie object and enough filler titles to the view to fill the page.
@@ -21,7 +21,7 @@ namespace MoviePlotQuiz.Controllers
     {
         public static Quiz quiz = new Quiz();
         public static List<Movie> movieList = new List<Movie>();
-
+        public static Leaderboard leader = new Leaderboard();
         public ActionResult Index()
         {
             return View();
@@ -172,6 +172,64 @@ namespace MoviePlotQuiz.Controllers
         public ActionResult QuizOptions()
         {
             return View();
+        }
+
+
+        /*DAVID
+         * When a player completes a quiz, they are given the option to view the leaderboard or
+            add their score to it by entering their name. If the name is entered, it goes to a 
+            player model and stores the name. The rest of the stats are copied from the quiz model.
+            
+            If they do not enter a name, this method will bypass
+            adding a player, and just show the current leaderboard. 
+             */
+        public ActionResult AddScore(LeaderboardModel Player)
+        {
+            if (Player.Name != null)
+            {
+                //ctrl+click on Leaderboard to see the Model. Cant find actual .cs file for it...
+                leader = new Leaderboard();
+
+                leader.Name = Player.Name;
+                if (quiz.Difficulty == 3)
+                {
+                    leader.Difficulty = "Easy";
+                }
+                else if (quiz.Difficulty == 5)
+                {
+                    leader.Difficulty = "Medium";
+                }
+                else if (quiz.Difficulty == 10)
+                {
+                    leader.Difficulty = "Hard";
+                }
+                leader.Genre = quiz.Genre;
+                leader.Questions = quiz.QuestionCount;
+                leader.Correct = quiz.AnswersCorrect;
+                leader.Percentage = quiz.Percent;
+                leader.Score = (quiz.AnswersCorrect * quiz.Difficulty);
+                try
+                {
+                    //DAVID
+                    //tries to pass the leader object to the addscores() action result in the
+                    //leaderboard controller. 
+                    return RedirectToAction("AddScores", "Leaderboards", leader);
+                }
+                catch
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            //DAVID  -- if no name is given by the player then this
+            //tries to redirect to LeaderboardController/Display, if it fails go to Home
+            try
+            {
+                return RedirectToAction("Index", "LeaderboardsController");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
     }
 }
