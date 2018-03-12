@@ -6,26 +6,31 @@
 }
 
 <body style="background-color: silver">
-    <div class="column" style="float: left; width: 31%; ">
-        <p>Question #@Model.QuestionNum: </p>
+    <p style="font-size: 3vw; text-align: center">Quiz</p>
+    <div class="row">
+        <div class="col-sm-4" style="">
 
-        <p>What movie is this?</p>
+            <p style="font-size:2.6vw; font-weight:bold ">Question #@Model.QuestionNum: </p>
 
-        <p id="plot">@Model.movieList[@Model.QuestionNum - 1].Plot</p>
-        <form action="QuizClone" method="post" class="question">
-            <p>Select an answer</p>
-            @for (int i = 1; i < Model.Difficulty + 1; i++)
-            {
-                <p>
-                    <input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required /> <label for="answer @i">@Session["title" + i]  </label>
-                </p>
-            }
+            <p style="font-size:1.8vw; font-weight:bold">What movie is this?</p>
 
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-    <div class="column" style="float: left; width: 32%">
-        <img style="float: right" src="~/Content/riddlerQuestion.jpg" height="428" width="300">
+            <p style="font-size:1.8vw; font-style:italic" id="plot">@Model.movieList[@Model.QuestionNum - 1].Plot</p>
+            <form action="QuizClone" method="post" class="question">
+                <p style="font-size:1.6vw; text-decoration:underline">Select an answer:</p>
+                @for (int i = 1; i < Model.Difficulty + 1; i++)
+                {
+                    <label style="font-size:1.6vw"><input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required />@Session["title" + i] </label><br />
+                }
+
+                <input style="font-size:1.5vw" type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="col-sm-4" style="">
+            <img class="img-responsive" style="width:100%; margin:auto" src="~/Content/riddlerQuestion.jpg">
+        </div>
+        <div class="col-sm-4">
+        </div>
     </div>
 </body>
 
