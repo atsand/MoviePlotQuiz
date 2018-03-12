@@ -18,9 +18,9 @@ namespace MoviePlotQuiz.Controllers
         // GET: IDs1
         public ActionResult Index()
         {
-
+            
             return View(db.IDs.ToList());
-
+           
         }
 
 
