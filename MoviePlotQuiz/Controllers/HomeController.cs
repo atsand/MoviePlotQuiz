@@ -11,17 +11,19 @@ using System.Configuration;
 using System.Web.Configuration;
 using MoviePlotQuiz.Controllers;
 
-//Need to make the GetFillerTitles make a list of enough filler titles to make the quiz since it will be done once at the start.
-//We need to find a way to pass one movie object and enough filler titles to the view to fill the page.
-//We must then remove the movie object from the list.
-//Must make sure the chosen filler titles don't match the chosen title.
+//Home controller - handles the logic for preparing and tracking the plot quiz
 namespace MoviePlotQuiz.Controllers
 {
     public class HomeController : Controller
     {
+        //create a quiz object, that gets reset with every new quiz at QuizStart()       
         public static Quiz quiz = new Quiz();
+        //static list that can be used without declaring an object. Contains movie objects
         public static List<Movie> movieList = new List<Movie>();
+        //creates a leader object, that stores the data needed to add the player to the leaderboards
         public static Leaderboard leader = new Leaderboard();
+
+
         public ActionResult Index()
         {
             return View();
@@ -41,6 +43,9 @@ namespace MoviePlotQuiz.Controllers
             return View();
         }
 
+        //starts a new quiz, taking parameters from the QuizOptions View page. Sets the quiz properties
+        //based on the options selected by the player.
+         
         public ActionResult QuizStart(Options options)
         {
             quiz = new Quiz();
@@ -48,19 +53,25 @@ namespace MoviePlotQuiz.Controllers
             quiz.Difficulty = options.Difficulty;
             quiz.QuestionCount = options.QuestionCount;
             List<string> titleList = new List<string>();
+            
+            //gets incorrect answer options and stores them in the list, used to generate radio button
+            //options.
             quiz.fillerList = IDs1Controller.FillerTitleList(quiz);
 
+            //gets enough correct answers to fill out a quiz, based on user selection.
             for (int i = 0; i < quiz.QuestionCount; i++)
             {
                 titleList.Add(IDs1Controller.RandomId(quiz));
-
             }
 
+            //for each movie in the list of answers/titles, get the movie's info from the API
             GetMovieData(titleList);
 
-
+            //goes to the beginning of the quiz.
             return RedirectToAction("QuizPage");
         }
+
+        //for each movie in the list of answers/titles, get the movie's info from the API
 
         public void GetMovieData(List<string> idList)
         {
@@ -68,23 +79,30 @@ namespace MoviePlotQuiz.Controllers
 
             foreach (string id in idList)
             {
-
+                //user specific key, for requesting info from the API
                 string key = WebConfigurationManager.AppSettings["MovieAPIKey"];
 
+                //builds a url to make a request from the API 
                 HttpWebRequest request = WebRequest.CreateHttp(String.Format("http://www.omdbapi.com/?apikey=" + key + "&i=" + id));
 
                 request.UserAgent = @"User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36";
-
+                
+                //API 's response to the request that was made.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
+                //reads the data in from the API response
                 StreamReader rd = new StreamReader(response.GetResponseStream());
 
+                //converts the streamreader's data into a useable string
                 String data = rd.ReadToEnd();
 
+                //parses the streamreaders data string into a JObject, with key/value pairs
                 JObject movieJObject = JObject.Parse(data);
 
+                //changes the Jobject into a movie object
                 Movie movie = movieJObject.ToObject<Movie>();
 
+                //adds the movie object to a list so it can be iterated later.
                 quiz.movieList.Add(movie);
 
                 //Session.Add("title", movie["Title"]);
@@ -100,11 +118,17 @@ namespace MoviePlotQuiz.Controllers
         //need to make a list of all movies that match the genre picked(not just for one question)
         public List<string> GetFillerTitles(List<string> fillerOptions)
         {
+
             List<string> options = new List<string>();
+           
+            //gets the movie at index [QuestionNum], of the movieList, and adds it to the option list
             options.Add(quiz.movieList[quiz.QuestionNum].Title);
 
+            //rng object to generate random numbers for selecting titles.
             Random rng = new Random();
 
+            //while we have less options than the quiz calls for, based on difficulty, 
+            //add a filler option, for the sessions that print out on the quiz page
             while (options.Count()<quiz.Difficulty)
             {
                 int random = rng.Next(0, fillerOptions.Count());
@@ -118,6 +142,8 @@ namespace MoviePlotQuiz.Controllers
             return options;
         }
 
+
+        //from the options list, set a session called titleI , to populate radio buttons on quiz page
         public void SetQuestionSessions(List<string> options)
         {
             
@@ -133,6 +159,7 @@ namespace MoviePlotQuiz.Controllers
             }
         }
 
+        //increments the question number, and goes to the summary page after all questions are answered
         public ActionResult QuizPage()
         {
             if (quiz.QuestionNum<quiz.QuestionCount)
@@ -147,6 +174,7 @@ namespace MoviePlotQuiz.Controllers
             }
         }
 
+        //logs the players guess, and increments number right or wrong accordingly, then goes back to quiz
         public ActionResult QuizClone(Guess g)
         {
             Session.Add("UserAnswer", g.Answer.ToString());
@@ -163,12 +191,14 @@ namespace MoviePlotQuiz.Controllers
             return View(quiz);
         }
 
+        //once all questions are answered, calc % correct, then go to the summary page to show results
         public ActionResult Summary()
         {
             quiz.SetPercent();
             return View(quiz);
         }
 
+        //shows the page for setting up the quiz, player chooses difficult/number of questions
         public ActionResult QuizOptions()
         {
             return View();
@@ -221,7 +251,7 @@ namespace MoviePlotQuiz.Controllers
                 }
             }
             //DAVID  -- if no name is given by the player then this
-            //tries to redirect to LeaderboardController/Display, if it fails go to Home
+            //tries to redirect to LeaderboardController/Index, if it fails go to Home
             try
             {
                 return RedirectToAction("Index", "LeaderboardsController");
