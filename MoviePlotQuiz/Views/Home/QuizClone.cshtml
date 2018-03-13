@@ -22,23 +22,23 @@
                     {
                         if (Session["UserAnswer"].ToString() == @Model.movieList[@Model.QuestionNum - 1].Title)
                         {
-                            <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked /> <label style="font-size:1.6vw; color: green" id="label @i">@Session["title" + i]</label><label style="font-size:1.6vw; color: green" id="right @i">  - CORRECT!</label>
+                            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: green" id="right @i"> - CORRECT!</label>
                         }
                         else
                         {
-                            <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="font-size:1.6vw; color: green" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
+                            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
                         }
 
                     }
                     else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
                     {
-                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" checked /> <label style="font-size:1.6vw; color: red; text-decoration: line-through" id="label @i">@Session["title" + i]</label><label style="font-size:1.6vw; color: red" id="right @i">  - WRONG</label>
+                        <label style="font-size:1.6vw; color: red; text-decoration: line-through" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: red" id="right @i">  - WRONG</label>
                     }
                     else
                     {
                         string color = "color: black";
 
-                        <input type="radio" id="answer @i" name="Answer" disabled="disabled" /> <label style="font-size:1.6vw; @color" id="label @i">@Session["title" + i]</label><label id="right @i"></label>
+                        <label style="font-size:1.6vw; @color" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
                     }
                 </p>
             }
