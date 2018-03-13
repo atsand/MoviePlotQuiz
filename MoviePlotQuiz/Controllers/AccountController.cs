@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MoviePlotQuiz.Models;
 
+//Auto generated controller for Identity login
+
 namespace MoviePlotQuiz.Controllers
 {
     [Authorize]

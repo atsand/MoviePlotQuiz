@@ -1,29 +1,143 @@
-﻿<!--      poster size is 300 x 428  -->
+﻿<!--This page is where the player is directed after answering the question
+    it reflects the players choice, highlights it rigth or wrong, displays the correct
+    movie poster, and additional movie information, then gives a button to go to the next
+    question in the quiz, or to the summary page if all questions have been answered.-->
+<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
+@model MoviePlotQuiz.Models.Movie
+@using MoviePlotQuiz.Models
 @{
-    ViewBag.Title = "Quiz";
-        }
+    List<Movie> movieList = Session["MovieList"] as List<Movie>;
+}
+
 <body style="background-color: silver">
-    <h2>Answer</h2>
+    <p style="font-size:3vw; text-align: center">Answer</p>
+    <div class="row">
+        <div class="col-sm-4" style="">
+            <p style="font-size:2.6vw; font-weight:bold ">Question #@Convert.ToInt32(Session["QuestionNumber"]): </p>
 
-    <p>Question #@ViewBag.id: </p>
-           <!--src needs to get an image from omdb poster, probably in a viewbag?    -->
-    <img style="float: right" src="~/Content/whySoSerious.jpg" height="428" width="300">
+            <p style="font-size:1.8vw; font-weight:bold">What movie is this?</p>
 
-    <p>What movie is this?</p>
+            <p style="font-size:1.8vw; font-style:italic" id="plot">@movieList[Convert.ToInt32(Session["QuestionNumber"]) - 1].Plot</p>
+            <p style="font-size:1.6vw; text-decoration:underline">Select an answer</p>
 
-    <p id="plot">This is where the plot of the movie goes to describe a movie</p>
-    <p>Select an answer</p>
+            @for (int i = 1; i < Convert.ToInt32(Session["Difficulty"]) + 1; i++)
+            {
+                <p>
+                    @if (movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title == Session["title" + i].ToString())
+                    {
+                        if (Session["UserAnswer"].ToString() == movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title)
+                        {
+                            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: green" id="right @i"> - CORRECT!</label>
+                        }
+                        else
+                        {
+                            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
+                        }
 
-    <p>
-        <input type="radio" id="answer1" name="Answer" />  <label id="label1" style="color: forestgreen">Answer 1  </label>
-    </p>
-    <p>
-        <input type="radio" id="answer2" name="Answer" />  <label>Answer 2  </label>
-    </p>
-    <p>
-        <input type="radio" id="answer3" name="Answer" />  <label>Answer 3  </label>
-    </p>
+                    }
+                    else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
+                    {
+                        <label style="font-size:1.6vw; color: red; text-decoration: line-through" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: red" id="right @i">  - WRONG</label>
+                    }
+                    else
+                    {
+                        string color = "color: black";
 
-    <p>@Html.ActionLink("Next Question", "Quiz", "Home")</p>
+                        <label style="font-size:1.6vw; @color" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
+                    }
+                </p>
+            }
 
+            <form action="QuizPage" method="post" class="answer">
+                <input style="font-size:1.5vw" type="submit" value="Next Question" />
+            </form>
+        </div>
+        <div class="col-sm-4" style="">
+            <img class="img-responsive" style="width:90%; margin:auto" src="@movieList[@Convert.ToInt32(Session["QuestionNumber"])-1].Poster" />
+        </div>
+        <div class="col-sm-4" style="font-size:1.5vw" text-align: center>
+            <label>Movie Title:</label><p>@movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title</p>
+            <label>Released: </label><p>@movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Released</p>
+            <label>Cast: </label><p>@movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Actors</p>
+            <label>Director(s): </label><p>@movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Director</p>
+            <p style="font-weight: bold">Current Score:</p>
+            <p id="right" style="color: green">Right: @Convert.ToInt32(Session["AnswersCorrect"])</p>
+            <p id="wrong" style="color: red">Wrong: @Convert.ToInt32(Session["AnswersWrong"])</p>
+        </div>
+    </div>
+    @*<script>
+
+            if ('@Session["title"].ToString()' == '@Session["title1"].ToString()') {
+                document.getElementById("label 1").style.color = "green";
+            }
+            if ('@Session["title"].ToString()' == '@Session["title2"].ToString()') {
+                document.getElementById("label 2").style.color = "green";
+            }
+            if ('@Session["title"].ToString()' == '@Session["title3"].ToString()') {
+                document.getElementById("label 3").style.color = "green";
+            }
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                document.getElementById("answer 1").checked = "true";
+            }
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                document.getElementById("answer 2").checked = "true";
+            }
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+                document.getElementById("answer 3").checked = "true";
+            }
+
+            var correct = false;
+
+            if ('@Session["UserAnswer"].ToString()' == '@Session["title"].ToString()') {
+                var correct = true;
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                    document.getElementById("right 1").innerHTML = "  - CORRECT!";
+                    document.getElementById("right 1").style.color = "green";
+                }
+
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                    document.getElementById("right 2").innerHTML = "  - CORRECT!";
+                    document.getElementById("right 2").style.color = "green";
+                }
+
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+                    document.getElementById("right 3").innerHTML = "  - CORRECT!";
+                    document.getElementById("right 3").style.color = "green";
+                }
+            }
+
+            if (correct == false) {
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title1"].ToString()') {
+                    document.getElementById("label 1").style.color = "red";
+                    document.getElementById("label 1").style.textDecoration = "line-through";
+                    document.getElementById("right 1").innerHTML = "  - WRONG";
+                    document.getElementById("right 1").style.color = "red";
+                }
+
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title2"].ToString()') {
+                    document.getElementById("label 2").style.color = "red";
+                    document.getElementById("label 2").style.textDecoration = "line-through";
+                    document.getElementById("right 2").innerHTML = "  - WRONG";
+                    document.getElementById("right 2").style.color = "red";
+                }
+                if ('@Session["UserAnswer"].ToString()' == '@Session["title3"].ToString()') {
+                    document.getElementById("label 3").style.color = "red";
+                    document.getElementById("label 3").style.textDecoration = "line-through";
+                    document.getElementById("right 3").innerHTML = "  - WRONG";
+                    document.getElementById("right 3").style.color = "red";
+                }
+
+
+
+            }
+
+
+        </script>*@
 </body>
+
+
+
+

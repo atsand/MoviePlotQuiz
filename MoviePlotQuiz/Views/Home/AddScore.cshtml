@@ -1,0 +1,23 @@
+﻿<!--This page doesn't get used, it was a place to add players to leaderboards,
+    that function has been moved to the summary page-->
+@model MoviePlotQuiz.Models.LeaderboardModel
+@{
+    ViewBag.Title = "AddScore";
+}
+
+<h2>Add your score!</h2>
+
+<form action="~/Controllers/LeaderboardsController/Index" method="post" class="toHome">
+    <input type="text" name="playerName" value="" required/>
+   
+    <input type="submit" value="Add me to the Leaderboards!" />
+</form>
+
+<!--   need to direct to LeaderboardsController/Index , not the Home/Index -->
+<form action="~/Controllers/LeaderboardsController/Index" method="post" class="toHome">
+    <input type="submit" value="Visit the Leaderboards" />
+</form>
+
+
+
+

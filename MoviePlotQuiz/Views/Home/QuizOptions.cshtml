@@ -1,0 +1,69 @@
+﻿<!--This page gives the player options to set up the quiz with different features.
+    They can choose the difficulty, the number of questions, and a genre to to play,
+    or the default of all genres.-->
+@{
+    ViewBag.Title = "QuizOptions";
+}
+
+<h2>Select Quiz Options</h2>
+<body style="background-color: silver">
+
+    <form action="QuizStart" method="post" class="options">
+
+        <p>
+            <label for="easy"><input id="easy" type="radio" name="Difficulty" value="3" required />Easy</label>
+        </p>
+        <p>
+            <label for="medium"><input id="medium" type="radio" name="Difficulty" value="5" checked="checked" />Medium</label>
+        </p>
+        <p>
+            <label for="hard"><input id="hard" type="radio" ; name="Difficulty" value="10" />Hard</label>
+        </p>
+
+        <p>Select a genre</p>
+        <select name="Genre">
+            <option value="All">All Genres</option>
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Horror">Horror</option>
+            <option value="Drama">Drama</option>
+            <option value="Crime">Crime</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Animation">Animation</option>
+            <option value="Adventure">Adventure</option>
+        </select>
+
+        <br />
+        <br />
+        <p>Select the number of questions on the quiz</p>
+        <p>
+            <input type="number" name="QuestionCount" value="10" step="5" min="5" max="25" />
+        </p>
+
+        <!--  need to get this only to fire off WHEN hard mode is selected.
+        <script>
+            var hint = document.getElementById("hard").checked;
+                if (hint == true) {
+                    @{ string off = "disabled=\"disabled\"";}
+                }
+        </script>
+
+
+        <br />
+        <p>Enable Hints?</p>
+        <p>
+            <input type="radio" name="hints" value="1" id="on" class="hintButtons" @off />  <label for="on">Hints On</label>
+        </p>
+        <p>
+            <input type="radio" name="hints" value="2" id="off" class="hintButtons" @off />  <label for="off">Hints Off</label>
+        </p>
+        <br />
+
+            -->
+        <input type="submit" name="submitOptions" value="Start New Quiz" />
+
+
+    </form>
+
+
+</body>

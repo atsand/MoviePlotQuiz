@@ -8,21 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using MoviePlotQuiz.Models;
 
+
 namespace MoviePlotQuiz.Controllers
 {
     public class IDs1Controller : Controller
     {
         public static MoviesEntities1 db = new MoviesEntities1();
-        
+        public static List<string> used = new List<string>();
+
         // GET: IDs1
         public ActionResult Index()
         {
             
             return View(db.IDs.ToList());
-
+           
         }
-    
-      
+
+
 
         // GET: IDs1/Details/5
         public ActionResult Details(int? id)
@@ -128,39 +130,97 @@ namespace MoviePlotQuiz.Controllers
             base.Dispose(disposing);
         }
 
-        //Pulls random movie ID from database
-        public static string RandomId()
+        //Pulls random movie ID from database and compares them to previously used IDs
+        public static string RandomId(string genre, int count)
         {
             Random rnd = new Random();
-            int Rando = rnd.Next(0, 232);
+            int rando = rnd.Next(0, 232);
             ID[] array = db.IDs.ToArray();
+
+            if (used.Count() == count)
+            {
+                used.Clear();
+            }
 
             try
             {
-                string randomId = array[Rando].ImdbId;
-                return randomId;               
+                if (genre == "All")
+                {
+                    string randoId = array[rando].ImdbId;
+
+                    if (used.Contains(randoId))
+                    {
+                        return RandomId(genre, count);
+                    }
+                    else
+                    {
+                        used.Add(randoId);
+                        return randoId;
+                    }
+                }
+                else if (array[rando].Genre.Contains(genre))
+                {
+                    string randoId = array[rando].ImdbId;
+
+                    if (used.Contains(randoId))
+                    {
+                        return RandomId(genre, count);
+                    }
+                    else
+                    {
+                        used.Add(randoId);
+                        return randoId;
+                    }
+                }
+                else
+                {
+                    return RandomId(genre, count);
+                }
             }
             catch (Exception)
             {
-                return RandomId();
+                return RandomId(genre, count);
             }
         }
 
-        //Pulls random movie Title from database
-        public static string RandomTitle()
+        //Returns list of filler movie titles matching chosen genre
+        public static List<string> FillerTitleList(string genre)
         {
-            Random rnd = new Random();
-            int Rando = rnd.Next(0, 232);
-            ID[] array = db.IDs.ToArray();
+            //Random rnd = new Random();
+            //int Rando = rnd.Next(0, 232);
+            //ID[] array = db.IDs.ToArray();
+            List<string> fillerTitles = new List<string>();
 
             try
             {
-                string randomTitle = array[Rando].Title;
-                return randomTitle;
+                foreach (ID id in db.IDs)
+                {
+                    if (genre == "All")
+                    {
+                        fillerTitles.Add(id.Title);
+                    }
+                    else 
+                    {
+                        if (id.Genre.Contains(genre))
+                        {
+                            fillerTitles.Add(id.Title);
+                        }
+                    }
+                }
+                return fillerTitles;
+                //if (array[Rando].Genre.Contains(quiz.Genre))
+                //{
+                //    string randomTitle = array[Rando].Title;
+                //    return randomTitle;
+                //}
+                //else
+                //{
+                //    return RandomTitle(quiz);
+                //}
             }
             catch (Exception)
             {
-                return RandomTitle();
+                return FillerTitleList(genre);
             }
         }
     }

@@ -1,38 +1,44 @@
-﻿@{
+﻿<!--This page shows contact information for the members of the group that worked on this project -->
+@{
     ViewBag.Title = "Contact";
 }
-<h2 style="text-align:center">Contact Information</h2>
-<br/>
+<!--<p style="font-size:3vw; text-align:center; margin-top: 5px;">Contact Information</p>-->
 <body style="background-color: silver">
-    <div class="column" style="float:left; width: 35%; text-align: center ">
-        <p>David Wilkins</p>
-        <p>Resume: <a href="~/Content/David_Wilkins_Resume.pdf">David Wilkins</a></p>
-        <p>Phone: 260-602-2241</p>
-        <p>Email: <a href="mailto:hire.davidwilkins@gmail.com">hire.davidwilkins@gmail.com</a></p>
-        <p>
-            <a href="https://www.linkedin.com/in/david-a-wilkins/">LinkedIn</a>
-            | <a href="https://github.com/davidwilkins1990">GitHub</a>
-        </p>
-        <img src="~/Content/DavidWilkins.jpg" height="325" width="250">
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <p style="font-weight: bold ;font-size:2vw">David Wilkins</p>
+            <p style="font-size:1.7vw">Resume: <a href="~/Content/David_Wilkins_Resume.pdf">David Wilkins</a></p>
+            <p style="font-size:1.7vw">Phone: 260-602-2241</p>
+            <p style="font-size:1.7vw">Email: <a href="mailto:hire.davidwilkins@gmail.com">hire.davidwilkins@gmail.com</a></p>
+            <p style="font-size:1.7vw">
+                <a href="https://www.linkedin.com/in/david-a-wilkins/">LinkedIn</a>
+                | <a href="https://github.com/davidwilkins1990">GitHub</a>
+            </p>
+            <img class="img-responsive img-rounded" src="~/Content/DavidWilkins.jpg" style="width:75%; margin:auto">
+        </div>
+
+        <div class="col-sm-4 text-center">
+            <p style="font-weight: bold; font-size:2vw">Aaron Sandusky</p>
+            <p style="font-size:1.7vw">Resume: <a href="~/Content/Aaron_Sandusky_Resume.pdf">Aaron Sandusky</a></p>
+            <p style="font-size:1.7vw">Phone: 734-680-6702</p>
+            <p style="font-size:1.7vw">Email: <a href="mailto:atsand23@gmail.com">atsand23@gmail.com</a></p>
+            <p style="font-size:1.7vw">
+                <a href="https://www.linkedin.com/in/aaron-sandusky/">LinkedIn</a>
+                | <a href="https://github.com/atsand">GitHub</a>
+            </p>
+            <img class="img-responsive img-rounded" src="~/Content/AaronSandusky.jpg" style="width:75%; margin:auto">
+        </div>
+
+        <div class="col-sm-4 text-center">
+            <p style="font-weight: bold; font-size:2vw">Andrew Patenge</p>
+            <p style="font-size:1.7vw">Resume: <a href="~/Content/AndrewPatengeResume.pdf">David Wilkins</a></p>
+            <p style="font-size:1.7vw">Phone: 231-923-8318</p>
+            <p style="font-size:1.7vw">Email: <a href="mailto:patenged@gmail.com">patenged@gmail.com</a></p>
+            <p style="font-size:1.7vw">
+                <a href="https://www.linkedin.com/in/andrew-patenge/">LinkedIn</a>
+                | <a href="https://github.com/patenged">GitHub</a>
+            </p>
+            <img class="img-responsive img-rounded" src="~/Content/AndrewPatenge.jpg" style="width:75%; margin:auto">
+        </div>
     </div>
-
-        <div class="column" style=" float:left ; width: 33%; text-align: center ">
-            <p>Aaron Sandusky</p>
-            <p>Resume Link</p>
-            <p>Phone: </p>
-            <p>Email: </p>
-            <p>LinkedIN: </p>
-            <p>GitHub: </p>
-            <p>IMG</p>
-        </div>
-
-        <div class="column" style=" float: left; width: 32%; text-align: center ">
-            <p>Andrew Patenge</p>
-            <p>Resume Link</p>
-            <p>Phone: </p>
-            <p>Email: </p>
-            <p>LinkedIN: </p>
-            <p>GitHub: </p>
-            <p>IMG</p>
-        </div>
 </body>
