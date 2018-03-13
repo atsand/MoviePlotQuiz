@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ This class was designed to hold the information about the quiz, to reference throughout 
+     the web app and store player progress.
+
+    It has been refactored to use Sessions instead of objects, so this class is not used currently
+     */
+
+
 namespace MoviePlotQuiz.Models
 {
     public class Quiz

@@ -5,6 +5,12 @@ using System.Web;
 
 namespace MoviePlotQuiz.Models
 {
+    /*
+        This class stores the players selected options when setting up the quiz. 
+        It uses this information to generate the correct amount of Session adds to 
+        store and generate the quiz.
+         */
+
     public class Options
     {
         public string Genre { get; set; }

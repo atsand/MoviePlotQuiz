@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MoviePlotQuiz.Models;
 
+
 namespace MoviePlotQuiz.Controllers
 {
     public class IDs1Controller : Controller
@@ -130,26 +131,26 @@ namespace MoviePlotQuiz.Controllers
         }
 
         //Pulls random movie ID from database and compares them to previously used IDs
-        public static string RandomId(Quiz quiz)
+        public static string RandomId(string genre, int count)
         {
             Random rnd = new Random();
             int rando = rnd.Next(0, 232);
             ID[] array = db.IDs.ToArray();
 
-            if (used.Count() == quiz.QuestionCount)
+            if (used.Count() == count)
             {
                 used.Clear();
             }
 
             try
             {
-                if (quiz.Genre == "All")
+                if (genre == "All")
                 {
                     string randoId = array[rando].ImdbId;
 
                     if (used.Contains(randoId))
                     {
-                        return RandomId(quiz);
+                        return RandomId(genre, count);
                     }
                     else
                     {
@@ -157,13 +158,13 @@ namespace MoviePlotQuiz.Controllers
                         return randoId;
                     }
                 }
-                else if (array[rando].Genre.Contains(quiz.Genre))
+                else if (array[rando].Genre.Contains(genre))
                 {
                     string randoId = array[rando].ImdbId;
 
                     if (used.Contains(randoId))
                     {
-                        return RandomId(quiz);
+                        return RandomId(genre, count);
                     }
                     else
                     {
@@ -173,17 +174,17 @@ namespace MoviePlotQuiz.Controllers
                 }
                 else
                 {
-                    return RandomId(quiz);
+                    return RandomId(genre, count);
                 }
             }
             catch (Exception)
             {
-                return RandomId(quiz);
+                return RandomId(genre, count);
             }
         }
 
         //Returns list of filler movie titles matching chosen genre
-        public static List<string> FillerTitleList(Quiz quiz)
+        public static List<string> FillerTitleList(string genre)
         {
             //Random rnd = new Random();
             //int Rando = rnd.Next(0, 232);
@@ -192,16 +193,15 @@ namespace MoviePlotQuiz.Controllers
 
             try
             {
-
                 foreach (ID id in db.IDs)
                 {
-                    if (quiz.Genre == "All")
+                    if (genre == "All")
                     {
                         fillerTitles.Add(id.Title);
                     }
                     else 
                     {
-                        if (id.Genre.Contains(quiz.Genre))
+                        if (id.Genre.Contains(genre))
                         {
                             fillerTitles.Add(id.Title);
                         }
@@ -220,7 +220,7 @@ namespace MoviePlotQuiz.Controllers
             }
             catch (Exception)
             {
-                return FillerTitleList(quiz);
+                return FillerTitleList(genre);
             }
         }
     }

@@ -16,11 +16,7 @@ namespace MoviePlotQuiz.Controllers
 {
     public class HomeController : Controller
     {
-        //create a quiz object, that gets reset with every new quiz at QuizStart()       
-        public static Quiz quiz = new Quiz();
-        //static list that can be used without declaring an object. Contains movie objects
-        public static List<Movie> movieList = new List<Movie>();
-        //creates a leader object, that stores the data needed to add the player to the leaderboards
+        //public Options options = new Options();
         public static Leaderboard leader = new Leaderboard();
 
 
@@ -48,24 +44,20 @@ namespace MoviePlotQuiz.Controllers
          
         public ActionResult QuizStart(Options options)
         {
-            quiz = new Quiz();
-            quiz.Genre = options.Genre;
-            quiz.Difficulty = options.Difficulty;
-            quiz.QuestionCount = options.QuestionCount;
-            List<string> titleList = new List<string>();
+            Session["QustionNumber"] = 0;
+            Session["Genre"] = options.Genre;
+            Session["Difficulty"] = options.Difficulty;
+            Session["QuestionCount"] = options.QuestionCount;
+            Session["AnswersWrong"] = 0;
+            Session["AnswersCorrect"] = 0;
+            List<string> movieList = new List<string>();
             
-            //gets incorrect answer options and stores them in the list, used to generate radio button
-            //options.
-            quiz.fillerList = IDs1Controller.FillerTitleList(quiz);
-
-            //gets enough correct answers to fill out a quiz, based on user selection.
-            for (int i = 0; i < quiz.QuestionCount; i++)
+            for (int i = 0; i < Convert.ToInt32(Session["QuestionCount"]); i++)
             {
-                titleList.Add(IDs1Controller.RandomId(quiz));
+                movieList.Add(IDs1Controller.RandomId(Session["Genre"].ToString(), Convert.ToInt32(Session["QuestionCount"])));
             }
 
-            //for each movie in the list of answers/titles, get the movie's info from the API
-            GetMovieData(titleList);
+            GetMovieData(movieList);
 
             //goes to the beginning of the quiz.
             return RedirectToAction("QuizPage");
@@ -75,7 +67,7 @@ namespace MoviePlotQuiz.Controllers
 
         public void GetMovieData(List<string> idList)
         {
-            quiz.movieList = new List<Movie>();
+            List<Movie> movieList = new List<Movie>();
 
             foreach (string id in idList)
             {
@@ -102,8 +94,7 @@ namespace MoviePlotQuiz.Controllers
                 //changes the Jobject into a movie object
                 Movie movie = movieJObject.ToObject<Movie>();
 
-                //adds the movie object to a list so it can be iterated later.
-                quiz.movieList.Add(movie);
+                movieList.Add(movie);
 
                 //Session.Add("title", movie["Title"]);
                 //Session.Add("released", movie["Released"]);
@@ -112,44 +103,40 @@ namespace MoviePlotQuiz.Controllers
                 //Session.Add("director", movie["Director"]);
                 //Session.Add("poster", movie["Poster"]);
             }
+            Session["MovieList"] = movieList;
         }
 
         //fills the buttons with random unique titles 
         //need to make a list of all movies that match the genre picked(not just for one question)
-        public List<string> GetFillerTitles(List<string> fillerOptions)
+        public List<string> GetFillerTitles(List<string> fillerTitles)
         {
-
+            List<Movie> movieList = Session["MovieList"] as List<Movie>;
             List<string> options = new List<string>();
-           
-            //gets the movie at index [QuestionNum], of the movieList, and adds it to the option list
-            options.Add(quiz.movieList[quiz.QuestionNum].Title);
+            options.Add(movieList[Convert.ToInt32(Session["QuestionNumber"])].Title.ToString());
 
             //rng object to generate random numbers for selecting titles.
             Random rng = new Random();
 
-            //while we have less options than the quiz calls for, based on difficulty, 
-            //add a filler option, for the sessions that print out on the quiz page
-            while (options.Count()<quiz.Difficulty)
+            while (options.Count() < (int)Session["Difficulty"])
             {
-                int random = rng.Next(0, fillerOptions.Count());
+                int random = rng.Next(0, movieList.Count());
 
-                if (!options.Contains(fillerOptions[random]))
+                if (!options.Contains(fillerTitles[random].ToString()))
                 {
-                    options.Add(fillerOptions[random]);
+                    options.Add(fillerTitles[random]);
                 }
             }
 
+            Session["Options"] = options;
             return options;
         }
 
-
-        //from the options list, set a session called titleI , to populate radio buttons on quiz page
-        public void SetQuestionSessions(List<string> options)
+        public void SetQuestionSessions(List<string> titleList)
         {
-            
+            List<string> options = Session["Options"] as List<string>;
             Random rnd = new Random();
 
-            for (int i = 0; i < quiz.Difficulty; i++)
+            for (int i = 0; i < (int)Session["Difficulty"]; i++)
             {
                 int x = rnd.Next(0, options.Count());
 
@@ -162,11 +149,11 @@ namespace MoviePlotQuiz.Controllers
         //increments the question number, and goes to the summary page after all questions are answered
         public ActionResult QuizPage()
         {
-            if (quiz.QuestionNum<quiz.QuestionCount)
+            if (Convert.ToInt32(Session["QuestionNumber"]) < Convert.ToInt32(Session["QuestionCount"]))
             {
-                SetQuestionSessions(GetFillerTitles(quiz.fillerList));
-                quiz.QuestionNum++;
-                return View(quiz);
+                SetQuestionSessions(GetFillerTitles(IDs1Controller.FillerTitleList(Session["Genre"].ToString())));
+                Session["QuestionNumber"] = Convert.ToInt32(Session["QuestionNumber"]) + 1;
+                return View();
             }
             else
             {
@@ -178,29 +165,35 @@ namespace MoviePlotQuiz.Controllers
         public ActionResult QuizClone(Guess g)
         {
             Session.Add("UserAnswer", g.Answer.ToString());
+            List<Movie> movieList = Session["MovieList"] as List<Movie>;
 
-            if (g.Answer== quiz.movieList[quiz.QuestionNum - 1].Title)
+            if (g.Answer== movieList[Convert.ToInt32(Session["QuestionNumber"]) - 1].Title)
             {
-                quiz.AnswersCorrect++;
+                Session["AnswersCorrect"] = Convert.ToInt32(Session["AnswersCorrect"]) + 1;
             }
             else
             {
-                quiz.AnswersWrong++;
+                Session["AnswersWrong"] = Convert.ToInt32(Session["AnswersWrong"]) + 1;
             }
 
-            return View(quiz);
+            return View();
         }
 
         //once all questions are answered, calc % correct, then go to the summary page to show results
         public ActionResult Summary()
         {
-            quiz.SetPercent();
-            return View(quiz);
+            double right = Convert.ToDouble(Session["AnswersCorrect"]);
+            double total = Convert.ToDouble(Session["QuestionCount"]);
+            double percent = (right / total) * 100;
+            Session["Percent"] = percent;
+
+            return View();
         }
 
         //shows the page for setting up the quiz, player chooses difficult/number of questions
         public ActionResult QuizOptions()
         {
+            Session.Abandon();
             return View();
         }
 
@@ -221,23 +214,23 @@ namespace MoviePlotQuiz.Controllers
                 leader = new Leaderboard();
 
                 leader.Name = Player.Name;
-                if (quiz.Difficulty == 3)
+                if ((int)Session["Difficulty"] == 3)
                 {
                     leader.Difficulty = "Easy";
                 }
-                else if (quiz.Difficulty == 5)
+                else if ((int)Session["Difficulty"] == 5)
                 {
                     leader.Difficulty = "Medium";
                 }
-                else if (quiz.Difficulty == 10)
+                else if ((int)Session["Difficulty"] == 10)
                 {
                     leader.Difficulty = "Hard";
                 }
-                leader.Genre = quiz.Genre;
-                leader.Questions = quiz.QuestionCount;
-                leader.Correct = quiz.AnswersCorrect;
-                leader.Percentage = quiz.Percent;
-                leader.Score = (quiz.AnswersCorrect * quiz.Difficulty);
+                leader.Genre = Session["Genre"].ToString();
+                leader.Questions = Convert.ToInt32(Session["QuestionCount"]);
+                leader.Correct = Convert.ToInt32(Session["AnswersCorrect"]);
+                leader.Percentage = Convert.ToDouble(Session["Percent"]);
+                leader.Score = (Convert.ToInt32(Session["AnswersCorrect"]) * Convert.ToInt32(Session["Difficulty"]));
                 try
                 {
                     //DAVID

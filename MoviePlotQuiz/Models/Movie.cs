@@ -5,8 +5,15 @@ using System.Web;
 
 namespace MoviePlotQuiz.Models
 {
+    /*
+        This class holds the movie data that is gathered from the OMDB API that is used. It
+        is used to generate lists of correct answers and wrong answers used in the quiz.
+         
+    */
+
     public class Movie
     {
+        
         public string imdbID { get; set; }
 
         public string Title { get; set; }
