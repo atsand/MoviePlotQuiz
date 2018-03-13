@@ -1,4 +1,9 @@
-﻿<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
+﻿<!--This page is shown after the player has answered all the questions in the quiz. 
+    It will give them a final total of questions right, wrong, and the percentage.
+    
+    Stretch goal: it will display the movie poster for all the correct answers -->
+<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
+
 @model MoviePlotQuiz.Models.Quiz
 
 @{
@@ -18,14 +23,14 @@
     <form action="Index" method="post" class="toHome">
         <input type="submit" value="Go to Home Page" />
     </form>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <form action="AddScore" method="post" class="toHome">
-        <input type="text" name="Name" value="" required maxlength="15"/>
+        <input type="text" name="Name" value="" required maxlength="15" />
         <input type="submit" value="Add me to the Leaderboards!" />
     </form>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <form action="~/Leaderboards/Index" method="post" class="toHome">
         <input type="submit" value="Visit the Leaderboards" />
     </form>
