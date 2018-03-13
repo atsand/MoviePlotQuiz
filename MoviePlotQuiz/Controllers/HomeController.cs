@@ -50,6 +50,8 @@ namespace MoviePlotQuiz.Controllers
             Session["QuestionCount"] = options.QuestionCount;
             Session["AnswersWrong"] = 0;
             Session["AnswersCorrect"] = 0;
+            Session["Hints"] = 3;
+
             List<string> movieList = new List<string>();
             
             for (int i = 0; i < Convert.ToInt32(Session["QuestionCount"]); i++)

@@ -17,16 +17,17 @@
             <p style="font-size:2.6vw; font-weight:bold ">Question #@Convert.ToInt32(Session["QuestionNumber"]):</p>
 
             <p style="font-size:1.8vw; font-weight:bold">What movie is this?</p>
-
+            
             <p style="font-size:1.8vw; font-style:italic" id="plot">@movieList[Convert.ToInt32(Session["QuestionNumber"]) - 1].Plot</p>
             <form action="QuizClone" method="post" class="question">
                 <p style="font-size:1.6vw; text-decoration:underline">Select an answer:</p>
                 @for (int i = 1; i < Convert.ToInt32(Session["Difficulty"]) + 1; i++)
-                {
-                    <label style="font-size:1.6vw"><input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required />@Session["title" + i] </label><br />
-                }
+    {
+            <label style="font-size:1.6vw"><input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required />@Session["title" + i] </label><br />
+}
 
-                <input style="font-size:1.5vw" type="submit" value="Submit">
+                <input style="font-size:1.5vw" type="submit" value="Submit"> <input style="font-size: 1.5vw" id="hint" type="button" onclick="hints()" name="Hint" value="Hint" /><label style="font-size: 1.5vw"></label><label style="font-size: 1.5vw" hidden="hidden" id="hintsR">@Session["hints"]</label>
+
             </form>
         </div>
 
@@ -34,6 +35,35 @@
             <img class="img-responsive" style="width:100%; margin:auto" src="~/Content/riddlerQuestion.jpg">
         </div>
         <div class="col-sm-4">
+            <label id="hintL" hidden="hidden">Cast: </label><p hidden="hidden" id="hintP">@movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Actors</p> 
+            
+            
+            <!--  When the hint button is clicked, this will check the hints available, if available
+                it will display the cast, then subtract one from hints available. Uses RAZOR
+                to reassign the new number of hints remaining to the Session[hints] so that
+                it won't reset to 3 at the next question.-->
+            <script>
+                function hints()
+                {   
+                    if (document.getElementById("hintL").hidden == true) {
+                        var x = document.getElementById("hintsR").innerHTML;
+                        if (x > 0) {
+                            document.getElementById("hintL").hidden = false;
+                            document.getElementById("hintP").hidden = false;
+                            x = x - 1;
+                            document.getElementById("hintsR").innerHTML = x;
+                        
+                       
+                        }
+                        else {
+                            alert("Sorry, you have used all of your hints!");
+                        }
+                    }
+                    else {
+                        alert("You have already used a hint on this question");
+                    }
+                }
+            </script>
         </div>
     </div>
 </body>
