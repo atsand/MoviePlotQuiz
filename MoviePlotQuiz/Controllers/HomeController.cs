@@ -10,6 +10,7 @@ using MoviePlotQuiz.Models;
 using System.Configuration;
 using System.Web.Configuration;
 using MoviePlotQuiz.Controllers;
+using System.Text;
 
 //Home controller - handles the logic for preparing and tracking the plot quiz
 namespace MoviePlotQuiz.Controllers
@@ -69,6 +70,7 @@ namespace MoviePlotQuiz.Controllers
         {
             List<Movie> movieList = new List<Movie>();
 
+            //StringBuilder sb = new StringBuilder();
             foreach (string id in idList)
             {
                 //user specific key, for requesting info from the API
@@ -86,8 +88,9 @@ namespace MoviePlotQuiz.Controllers
                 StreamReader rd = new StreamReader(response.GetResponseStream());
 
                 //converts the streamreader's data into a useable string
+                //sb.Append(rd.ReadToEnd());
                 String data = rd.ReadToEnd();
-
+                
                 //parses the streamreaders data string into a JObject, with key/value pairs
                 JObject movieJObject = JObject.Parse(data);
 
@@ -95,13 +98,6 @@ namespace MoviePlotQuiz.Controllers
                 Movie movie = movieJObject.ToObject<Movie>();
 
                 movieList.Add(movie);
-
-                //Session.Add("title", movie["Title"]);
-                //Session.Add("released", movie["Released"]);
-                //Session.Add("actors", movie["Actors"]);
-                //Session.Add("plot", movie["Plot"]);
-                //Session.Add("director", movie["Director"]);
-                //Session.Add("poster", movie["Poster"]);
             }
             Session["MovieList"] = movieList;
         }
@@ -127,7 +123,6 @@ namespace MoviePlotQuiz.Controllers
                 }
             }
 
-            Session["Options"] = options;
             return options;
         }
 
@@ -136,13 +131,13 @@ namespace MoviePlotQuiz.Controllers
             List<string> options = Session["Options"] as List<string>;
             Random rnd = new Random();
 
-            for (int i = 0; i < (int)Session["Difficulty"]; i++)
+            for (int i = 0; i < Convert.ToInt32(Session["Difficulty"]); i++)
             {
-                int x = rnd.Next(0, options.Count());
+                int x = rnd.Next(0, titleList.Count());
 
-                Session.Add("title" + (i + 1), options[x]);
+                Session.Add("title" + (i + 1), titleList[x]);
 
-                options.RemoveAt(x);
+                titleList.RemoveAt(x);
             }
         }
 
