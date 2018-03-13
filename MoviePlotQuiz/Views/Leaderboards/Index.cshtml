@@ -1,4 +1,8 @@
-﻿@model IEnumerable<MoviePlotQuiz.Models.Leaderboard>
+﻿<!--This page shows the leaderboard to the user. Auto Generated page, but removed the links
+    for the CRUD.  Will show the current list of players on the leaderboard, filtered by
+    highest score first.-->
+
+@model IEnumerable<MoviePlotQuiz.Models.Leaderboard>
 
 @{
     ViewBag.Title = "Index";
@@ -35,30 +39,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Difficulty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Questions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Correct)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Percentage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Score)
-        </td>       
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Difficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Questions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correct)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Percentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
+    }
 
 </table>

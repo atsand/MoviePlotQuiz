@@ -1,4 +1,6 @@
-﻿
+﻿<!--This page gives the player options to set up the quiz with different features.
+    They can choose the difficulty, the number of questions, and a genre to to play,
+    or the default of all genres.-->
 @{
     ViewBag.Title = "QuizOptions";
 }
@@ -15,7 +17,7 @@
             <input id="medium" type="radio" name="Difficulty" value="5" checked="checked" />  <label for="medium">Medium</label>
         </p>
         <p>
-            <input id="hard" type="radio"; name="Difficulty" value="10" />  <label for="hard">Hard</label>
+            <input id="hard" type="radio" ; name="Difficulty" value="10" />  <label for="hard">Hard</label>
         </p>
 
         <p>Select a genre</p>
@@ -38,9 +40,9 @@
             <input type="number" name="QuestionCount" value="10" step="5" min="5" max="25" />
         </p>
 
-        <!--  need to get this only to fire off WHEN hard mode is selected.  
+        <!--  need to get this only to fire off WHEN hard mode is selected.
         <script>
-            var hint = document.getElementById("hard").checked;      
+            var hint = document.getElementById("hard").checked;
                 if (hint == true) {
                     @{ string off = "disabled=\"disabled\"";}
                 }
