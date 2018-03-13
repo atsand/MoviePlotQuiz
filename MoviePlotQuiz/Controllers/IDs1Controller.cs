@@ -13,6 +13,7 @@ namespace MoviePlotQuiz.Controllers
 {
     public class IDs1Controller : Controller
     {
+        public static Random rnd = new Random();
         public static MoviesEntities1 db = new MoviesEntities1();
         public static List<string> used = new List<string>();
 
@@ -133,7 +134,7 @@ namespace MoviePlotQuiz.Controllers
         //Pulls random movie ID from database and compares them to previously used IDs
         public static string RandomId(string genre, int count)
         {
-            Random rnd = new Random();
+
             int rando = rnd.Next(0, 232);
             ID[] array = db.IDs.ToArray();
 

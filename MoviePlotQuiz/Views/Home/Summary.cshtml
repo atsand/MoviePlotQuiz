@@ -1,10 +1,18 @@
-﻿<!--This page is shown after the player has answered all the questions in the quiz. 
+﻿<!--This page is shown after the player has answered all the questions in the quiz.
     It will give them a final total of questions right, wrong, and the percentage.
     Stretch goal: it will display the movie poster for all the correct answers -->
 <!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
 @using MoviePlotQuiz.Models
 @model MoviePlotQuiz.Models.Quiz
 
+@{
+    List<Movie> movieList = Session["MovieList"] as List<Movie>;
+}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 <body style="background-color: silver; text-align: center">
     <h2>Summary of Quiz Results</h2>
@@ -31,6 +39,31 @@
     <form action="~/Leaderboards/Index" method="post" class="toHome">
         <input type="submit" value="Visit the Leaderboards" />
     </form>
+
+    <div class="container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                @for (int i = 1; i < movieList.Count; i++)
+                {
+                    <li data-target="#myCarousel" data-slide-to="@i"></li>
+
+                }
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="@movieList[0].Poster" style="width:25%; margin:auto">
+                </div>
+                @for (int i = 1; i < movieList.Count; i++)
+                {
+                    <div class="item">
+                        <img src="@movieList[i].Poster" style="width:25%; margin:auto">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
     <!--Add images of posters for movies that were part of the quiz.-->
     <!--for each movie in list of answers, get movie.poster-->

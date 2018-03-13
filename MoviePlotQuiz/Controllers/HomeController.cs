@@ -51,7 +51,10 @@ namespace MoviePlotQuiz.Controllers
             Session["AnswersWrong"] = 0;
             Session["AnswersCorrect"] = 0;
             List<string> movieList = new List<string>();
-            
+            List<string> fillerTitles = new List<string>();
+            fillerTitles = IDs1Controller.FillerTitleList(Session["Genre"].ToString());
+            Session["FillerTitles"] = fillerTitles;
+
             for (int i = 0; i < Convert.ToInt32(Session["QuestionCount"]); i++)
             {
                 movieList.Add(IDs1Controller.RandomId(Session["Genre"].ToString(), Convert.ToInt32(Session["QuestionCount"])));
@@ -117,7 +120,7 @@ namespace MoviePlotQuiz.Controllers
             //rng object to generate random numbers for selecting titles.
             Random rng = new Random();
 
-            while (options.Count() < (int)Session["Difficulty"])
+            while (options.Count() < Convert.ToInt32(Session["Difficulty"]))
             {
                 int random = rng.Next(0, movieList.Count());
 
@@ -127,31 +130,31 @@ namespace MoviePlotQuiz.Controllers
                 }
             }
 
-            Session["Options"] = options;
             return options;
         }
 
         public void SetQuestionSessions(List<string> titleList)
         {
-            List<string> options = Session["Options"] as List<string>;
             Random rnd = new Random();
 
-            for (int i = 0; i < (int)Session["Difficulty"]; i++)
+            for (int i = 0; i < Convert.ToInt32(Session["Difficulty"]); i++)
             {
-                int x = rnd.Next(0, options.Count());
+                int x = rnd.Next(0, titleList.Count());
 
-                Session.Add("title" + (i + 1), options[x]);
+                Session.Add("title" + (i + 1), titleList[x]);
 
-                options.RemoveAt(x);
+                titleList.RemoveAt(x);
             }
         }
 
         //increments the question number, and goes to the summary page after all questions are answered
         public ActionResult QuizPage()
         {
+            List<string> fillerTitles = Session["FillerTitles"] as List<string>;
+
             if (Convert.ToInt32(Session["QuestionNumber"]) < Convert.ToInt32(Session["QuestionCount"]))
             {
-                SetQuestionSessions(GetFillerTitles(IDs1Controller.FillerTitleList(Session["Genre"].ToString())));
+                SetQuestionSessions(GetFillerTitles(fillerTitles));
                 Session["QuestionNumber"] = Convert.ToInt32(Session["QuestionNumber"]) + 1;
                 return View();
             }
