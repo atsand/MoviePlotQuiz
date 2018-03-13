@@ -2,10 +2,11 @@
     selection and clicking submit, the user is taken to the quiz clone page to find the 
     correct answer and continue the quiz.-->
 <!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
-@model MoviePlotQuiz.Models.Quiz
+@model MoviePlotQuiz.Models.Movie
 
+@using MoviePlotQuiz.Models
 @{
-    ViewBag.Title = "Quiz";
+    List<Movie> movieList = Session["MovieList"] as List<Movie>;
 }
 
 <body style="background-color: silver">
@@ -13,14 +14,14 @@
     <div class="row">
         <div class="col-sm-4" style="">
 
-            <p style="font-size:2.6vw; font-weight:bold ">Question #@Model.QuestionNum: </p>
+            <p style="font-size:2.6vw; font-weight:bold ">Question #@Convert.ToInt32(Session["QuestionNumber"]):</p>
 
             <p style="font-size:1.8vw; font-weight:bold">What movie is this?</p>
 
-            <p style="font-size:1.8vw; font-style:italic" id="plot">@Model.movieList[@Model.QuestionNum - 1].Plot</p>
+            <p style="font-size:1.8vw; font-style:italic" id="plot">@movieList[Convert.ToInt32(Session["QuestionNumber"]) - 1].Plot</p>
             <form action="QuizClone" method="post" class="question">
                 <p style="font-size:1.6vw; text-decoration:underline">Select an answer:</p>
-                @for (int i = 1; i < Model.Difficulty + 1; i++)
+                @for (int i = 1; i < Convert.ToInt32(Session["Difficulty"]) + 1; i++)
                 {
                     <label style="font-size:1.6vw"><input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required />@Session["title" + i] </label><br />
                 }

@@ -1,18 +1,15 @@
 ﻿<!--This page is shown after the player has answered all the questions in the quiz. 
     It will give them a final total of questions right, wrong, and the percentage.
-    
     Stretch goal: it will display the movie poster for all the correct answers -->
 <!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
-
+@using MoviePlotQuiz.Models
 @model MoviePlotQuiz.Models.Quiz
 
-@{
-    ViewBag.Title = "Summary";
-}
+
 <body style="background-color: silver; text-align: center">
     <h2>Summary of Quiz Results</h2>
 
-    <label>Questions answered: @Model.QuestionNum | Right: @Model.AnswersCorrect | Wrong: @Model.AnswersWrong | Percent: @Model.Percent%</label>
+    <label>Questions answered: @Convert.ToInt32(Session["QuestionCount"]) | Right: @Convert.ToInt32(Session["AnswersCorrect"]) | Wrong: @Convert.ToInt32(Session["AnswersWrong"]) | Percent: @Convert.ToDouble(Session["Percent"])%</label>
     <br />
     <br />
     <form action="QuizOptions" method="post" class="toNewQuiz">
