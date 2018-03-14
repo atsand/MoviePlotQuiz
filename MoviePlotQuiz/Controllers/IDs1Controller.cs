@@ -154,6 +154,7 @@ namespace MoviePlotQuiz.Controllers
                         return randoId;
                     }
                 }
+                //see if we can sort db array by genre before running this section
                 else if (array[rando].Genre.Contains(genre))
                 {
                     string randoId = array[rando].ImdbId;

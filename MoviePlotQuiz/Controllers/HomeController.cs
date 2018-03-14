@@ -17,7 +17,7 @@ namespace MoviePlotQuiz.Controllers
 {
     public class HomeController : Controller
     {
-        //public Options options = new Options();
+        public Options options = new Options();
         public static Leaderboard leader = new Leaderboard();
 
         public ActionResult Index()
@@ -170,6 +170,7 @@ namespace MoviePlotQuiz.Controllers
         public ActionResult QuizClone(Guess g)
         {
             Session.Add("UserAnswer", g.Answer.ToString());
+            //cast Session["MovieList"] as a list of Movie objects
             List<Movie> movieList = Session["MovieList"] as List<Movie>;
 
             if (g.Answer== movieList[Convert.ToInt32(Session["QuestionNumber"]) - 1].Title)
@@ -207,7 +208,7 @@ namespace MoviePlotQuiz.Controllers
         {
             if (Player.Name != null)
             {
-                //ctrl+click on Leaderboard to see the Model. Cant find actual .cs file for it...
+                //ctrl+click on Leaderboard to see the Model. Inside Model1.edmx/Model1.tt/Leaderboard.cs
                 leader = new Leaderboard();
 
                 leader.Name = Player.Name;

@@ -37,7 +37,7 @@ namespace MoviePlotQuiz.Controllers
                     orderby l.Score descending
                     select l;
             */
-            return View(db.Leaderboards.OrderByDescending(l => l.Score).ToList());
+            return View(db.Leaderboards.OrderByDescending(row => row.Score).ToList());
         }
 
         // GET: Leaderboards/Details/5
