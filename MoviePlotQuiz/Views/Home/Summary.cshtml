@@ -3,19 +3,9 @@
     Stretch goal: it will display the movie poster for all the correct answers -->
 <!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
 @using MoviePlotQuiz.Models
-@model MoviePlotQuiz.Models.Quiz
 @{
     List<Movie> movieList = Session["MovieList"] as List<Movie>;
 }
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
-@{
-    List<Movie> movieList = Session["MovieList"] as List<Movie>;
-}
-
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,7 +13,6 @@
 
 <body style="background-color: silver; text-align: center">
     <h2>Summary of Quiz Results</h2>
-
     <label>Questions answered: @Convert.ToInt32(Session["QuestionCount"]) | Right: @Convert.ToInt32(Session["AnswersCorrect"]) | Wrong: @Convert.ToInt32(Session["AnswersWrong"]) | Percent: @Convert.ToDouble(Session["Percent"])%</label>
     <br />
     <br />
@@ -69,8 +58,7 @@
             </div>
         </div>
     </div>
-    <!--Add images of posters for movies that were part of the quiz.-->
-    <!--for each movie in list of answers, get movie.poster-->
+    
 </body>
 
 

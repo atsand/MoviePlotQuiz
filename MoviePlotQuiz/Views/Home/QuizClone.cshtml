@@ -2,8 +2,6 @@
     it reflects the players choice, highlights it rigth or wrong, displays the correct
     movie poster, and additional movie information, then gives a button to go to the next
     question in the quiz, or to the summary page if all questions have been answered.-->
-<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
-@model MoviePlotQuiz.Models.Movie
 @using MoviePlotQuiz.Models
 @{
     List<Movie> movieList = Session["MovieList"] as List<Movie>;
@@ -41,9 +39,7 @@
                     }
                     else
                     {
-                        string color = "color: black";
-
-                        <label style="font-size:1.6vw; @color" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
+                        <label style="font-size:1.6vw" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
                     }
                 </p>
             }
@@ -129,12 +125,7 @@
                     document.getElementById("right 3").innerHTML = "  - WRONG";
                     document.getElementById("right 3").style.color = "red";
                 }
-
-
-
             }
-
-
         </script>*@
 </body>
 

@@ -14,8 +14,7 @@ namespace MoviePlotQuiz.Controllers
     {
         //DAVID - do NOT make static.
         public LeaderboardEntities db = new LeaderboardEntities();
-
-      
+    
         //DAVID
         //added method to add a LeaderboardModel object to the db, then save 
         public ActionResult AddScores(Leaderboard leader)
@@ -38,7 +37,7 @@ namespace MoviePlotQuiz.Controllers
                     orderby l.Score descending
                     select l;
             */
-            return View(db.Leaderboards.OrderByDescending(l => l.Score).ToList());
+            return View(db.Leaderboards.OrderByDescending(row => row.Score).ToList());
         }
 
         // GET: Leaderboards/Details/5
