@@ -20,7 +20,6 @@ namespace MoviePlotQuiz.Controllers
         //public Options options = new Options();
         public static Leaderboard leader = new Leaderboard();
 
-
         public ActionResult Index()
         {
             return View();
@@ -40,9 +39,15 @@ namespace MoviePlotQuiz.Controllers
             return View();
         }
 
+        //shows the page for setting up the quiz, player chooses difficult/number of questions
+        public ActionResult QuizOptions()
+        {
+            Session.Abandon();
+            return View();
+        }
+
         //starts a new quiz, taking parameters from the QuizOptions View page. Sets the quiz properties
-        //based on the options selected by the player.
-         
+        //based on the options selected by the player.         
         public ActionResult QuizStart(Options options)
         {
             Session["QustionNumber"] = 0;
@@ -70,7 +75,6 @@ namespace MoviePlotQuiz.Controllers
         }
 
         //for each movie in the list of answers/titles, get the movie's info from the API
-
         public void GetMovieData(List<string> idList)
         {
             List<Movie> movieList = new List<Movie>();
@@ -85,7 +89,7 @@ namespace MoviePlotQuiz.Controllers
                 HttpWebRequest request = WebRequest.CreateHttp(String.Format("http://www.omdbapi.com/?apikey=" + key + "&i=" + id));
 
                 request.UserAgent = @"User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36";
-                
+
                 //API 's response to the request that was made.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -95,7 +99,7 @@ namespace MoviePlotQuiz.Controllers
                 //converts the streamreader's data into a useable string
                 //sb.Append(rd.ReadToEnd());
                 String data = rd.ReadToEnd();
-                
+
                 //parses the streamreaders data string into a JObject, with key/value pairs
                 JObject movieJObject = JObject.Parse(data);
 
@@ -105,44 +109,6 @@ namespace MoviePlotQuiz.Controllers
                 movieList.Add(movie);
             }
             Session["MovieList"] = movieList;
-        }
-
-        //fills the buttons with random unique titles 
-        //need to make a list of all movies that match the genre picked(not just for one question)
-        public List<string> GetFillerTitles(List<string> fillerTitles)
-        {
-            List<Movie> movieList = Session["MovieList"] as List<Movie>;
-            List<string> options = new List<string>();
-            options.Add(movieList[Convert.ToInt32(Session["QuestionNumber"])].Title.ToString());
-
-            //rng object to generate random numbers for selecting titles.
-            Random rng = new Random();
-
-            while (options.Count() < Convert.ToInt32(Session["Difficulty"]))
-            {
-                int random = rng.Next(0, movieList.Count());
-
-                if (!options.Contains(fillerTitles[random].ToString()))
-                {
-                    options.Add(fillerTitles[random]);
-                }
-            }
-
-            return options;
-        }
-
-        public void SetQuestionSessions(List<string> titleList)
-        {
-            Random rnd = new Random();
-
-            for (int i = 0; i < Convert.ToInt32(Session["Difficulty"]); i++)
-            {
-                int x = rnd.Next(0, titleList.Count());
-
-                Session.Add("title" + (i + 1), titleList[x]);
-
-                titleList.RemoveAt(x);
-            }
         }
 
         //increments the question number, and goes to the summary page after all questions are answered
@@ -159,6 +125,44 @@ namespace MoviePlotQuiz.Controllers
             else
             {
                 return RedirectToAction("Summary");
+            }
+        }
+
+        //fills the buttons with random unique titles 
+        //need to make a list of all movies that match the genre picked(not just for one question)
+        public List<string> GetFillerTitles(List<string> fillerTitles)
+        {
+            List<Movie> movieList = Session["MovieList"] as List<Movie>;
+            List<string> options = new List<string>();
+            options.Add(movieList[Convert.ToInt32(Session["QuestionNumber"])].Title.ToString());
+
+            //rng object to generate random numbers for selecting titles.
+            Random rng = new Random();
+
+            while (options.Count() < Convert.ToInt32(Session["Difficulty"]))
+            {
+                int random = rng.Next(0, fillerTitles.Count());
+
+                if (!options.Contains(fillerTitles[random].ToString()))
+                {
+                    options.Add(fillerTitles[random]);
+                }
+            }
+
+            return options;
+        }
+
+        public void SetQuestionSessions(List<string> options)
+        {
+            Random rnd = new Random();
+
+            for (int i = 0; i < Convert.ToInt32(Session["Difficulty"]); i++)
+            {
+                int x = rnd.Next(0, options.Count());
+
+                Session.Add("title" + (i + 1), options[x]);
+
+                options.RemoveAt(x);
             }
         }
 
@@ -190,14 +194,6 @@ namespace MoviePlotQuiz.Controllers
 
             return View();
         }
-
-        //shows the page for setting up the quiz, player chooses difficult/number of questions
-        public ActionResult QuizOptions()
-        {
-            Session.Abandon();
-            return View();
-        }
-
 
         /*DAVID
          * When a player completes a quiz, they are given the option to view the leaderboard or

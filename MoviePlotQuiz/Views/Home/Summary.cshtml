@@ -3,19 +3,9 @@
     Stretch goal: it will display the movie poster for all the correct answers -->
 <!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
 @using MoviePlotQuiz.Models
-@model MoviePlotQuiz.Models.Quiz
 @{
     List<Movie> movieList = Session["MovieList"] as List<Movie>;
 }
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
-@{
-    List<Movie> movieList = Session["MovieList"] as List<Movie>;
-}
-
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
