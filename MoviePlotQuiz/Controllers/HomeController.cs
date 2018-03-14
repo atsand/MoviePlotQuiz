@@ -55,6 +55,8 @@ namespace MoviePlotQuiz.Controllers
 
             List<string> movieList = new List<string>();
             List<string> fillerTitles = new List<string>();
+
+            //gets all possible titles
             fillerTitles = IDs1Controller.FillerTitleList(Session["Genre"].ToString());
             Session["FillerTitles"] = fillerTitles;
 
@@ -254,6 +256,7 @@ namespace MoviePlotQuiz.Controllers
             {
                 return RedirectToAction("Index");
             }
+
         }
     }
 }
