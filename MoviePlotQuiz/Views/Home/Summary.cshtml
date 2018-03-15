@@ -11,29 +11,28 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body style="background-color: silver; text-align: center">
+<body style="background-color: black; color:white; text-align: center">
     <h2>Summary of Quiz Results</h2>
     <label>Questions answered: @Convert.ToInt32(Session["QuestionCount"]) | Right: @Convert.ToInt32(Session["AnswersCorrect"]) | Wrong: @Convert.ToInt32(Session["AnswersWrong"]) | Percent: @Convert.ToDouble(Session["Percent"])%</label>
     <br />
-    <br />
+    
     <form action="QuizOptions" method="post" class="toNewQuiz">
-        <input type="submit" value="Start New Quiz" />
+        <input class="btn" type="submit" value="Start New Quiz" style="margin-top: 5px" />
     </form>
-    <br />
+   
     <br />
     <form action="Index" method="post" class="toHome">
-        <input type="submit" value="Go to Home Page" />
+        <input class="btn"  type="submit" value="Go to Home Page" />
     </form>
-    <br />
+ 
     <br />
     <form action="AddScore" method="post" class="toHome">
-        <input type="text" name="Name" value="" required maxlength="15" />
-        <input type="submit" value="Add me to the Leaderboards!" />
+        <input class="btn" type="text" name="Name" value="" required maxlength="15" />
+        <input class="btn" type="submit" value="Add me to the Leaderboards!" />
     </form>
     <br />
-    <br />
-    <form action="~/Leaderboards/Index" method="post" class="toHome">
-        <input type="submit" value="Visit the Leaderboards" />
+        <form action="~/Leaderboards/Index" method="post" class="toHome">
+        <input class="btn" type="submit" value="Visit the Leaderboards" style="margin-bottom: 10px;"/>
     </form>
     <div class="container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">

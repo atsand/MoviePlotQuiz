@@ -5,61 +5,99 @@
     ViewBag.Title = "QuizOptions";
 }
 
-<h2>Select Quiz Options</h2>
-<body style="background-color: silver">
+<h2 style="text-align: center; color: white">Select Quiz Options</h2>
+<body style="background-color: black">
+    <div style="color: white; ">
+        <div style="float: left; width: 30%; margin-top: 25px; text-align: center">
+            <p>EASY: Each question will have 3 possible answers.</P>
+             <p>Each question is worth 3 points!</p>
+            <br />
+            <p>MEDIUM: Each question will have 5 possible answers.</p>
+            <p>Each question is worth 5 points!</p>
+            <br />
+            <p>HARD: Each question will have 10 possible answers.</p>
+             <p>Each Question is worth 10 points!</p>
+            <br />
+            <p>GENRE: This will only give you questions from your favorite movie category!</p>
+            <br />
+            <p>Quizzes can between 5 and 25 questions long.</p>
+        </div>
+        <div style="float: left; width: 40%;  text-align: center; margin-top: 25px">
+            <form action="QuizStart" method="post" class="options">
 
-    <form action="QuizStart" method="post" class="options">
+                <p>
+                    <label for="easy"><input id="easy" type="radio" name="Difficulty" value="3" required /> Easy</label>
+                </p>
+                <p>
+                    <label for="medium"><input id="medium" type="radio" name="Difficulty" value="5" checked="checked" /> Medium</label>
+                </p>
+                <p>
+                    <label for="hard"><input id="hard" type="radio" ; name="Difficulty" value="10" /> Hard</label>
+                </p>
 
-        <p>
-            <label for="easy"><input id="easy" type="radio" name="Difficulty" value="3" required />Easy</label>
-        </p>
-        <p>
-            <label for="medium"><input id="medium" type="radio" name="Difficulty" value="5" checked="checked" />Medium</label>
-        </p>
-        <p>
-            <label for="hard"><input id="hard" type="radio" ; name="Difficulty" value="10" />Hard</label>
-        </p>
+                <p>Select a genre</p>
+                <select name="Genre">
+                    <option value="All">All Genres</option>
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Animation">Animation</option>
+                    <option value="Adventure">Adventure</option>
+                </select>
 
-        <p>Select a genre</p>
-        <select name="Genre">
-            <option value="All">All Genres</option>
-            <option value="Action">Action</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Horror">Horror</option>
-            <option value="Drama">Drama</option>
-            <option value="Crime">Crime</option>
-            <option value="Sci-Fi">Sci-Fi</option>
-            <option value="Animation">Animation</option>
-            <option value="Adventure">Adventure</option>
-        </select>
+                <br />
+                <br />
+                <p>Select the number of questions on the quiz</p>
+                <p>
+                    <input type ="number" name="QuestionCount" value="10" step="5" min="5" max="25" />
+                </p>
 
-        <br />
-        <br />
-        <p>Select the number of questions on the quiz</p>
-        <p>
-            <input type="number" name="QuestionCount" value="10" step="5" min="5" max="25" />
-        </p>
-
-        <!--  need to get this only to fire off WHEN hard mode is selected.
-        <script>
-            var hint = document.getElementById("hard").checked;
-                if (hint == true) {
-                    @{ string off = "disabled=\"disabled\"";}
-                }
-        </script>
+                <!--  need to get this only to fire off WHEN hard mode is selected.
+                <script>
+                    var hint = document.getElementById("hard").checked;
+                        if (hint == true) {
+                            @{ string off = "disabled=\"disabled\"";}
+                        }
+                </script>
 
 
-        <br />
-        <p>Enable Hints?</p>
-        <p>
-            <input type="radio" name="hints" value="1" id="on" class="hintButtons" @off />  <label for="on">Hints On</label>
-        </p>
-        <p>
-            <input type="radio" name="hints" value="2" id="off" class="hintButtons" @off />  <label for="off">Hints Off</label>
-        </p>
-        <br />
+                <br />
+                <p>Enable Hints?</p>
+                <p>
+                    <input type="radio" name="hints" value="1" id="on" class="hintButtons" @off />  <label for="on">Hints On</label>
+                </p>
+                <p>
+                    <input type="radio" name="hints" value="2" id="off" class="hintButtons" @off />  <label for="off">Hints Off</label>
+                </p>
+                <br />
 
-            -->
-        <input type="submit" name="submitOptions" value="Start New Quiz" />
-    </form>
+                    -->
+                <input class="btn" type="submit" name="submitOptions" value="Start New Quiz" />
+            </form>
+        </div>
+        <div style="float: left ; width: 30%; padding-left: 0px; margin-top: 25px; text-align: center">
+
+            <p>
+                Picking options randomly generates a unique quiz, just for you. 
+            </p>
+            <br/>
+            <p>
+                There are
+                over 355,000,000,000,000,000,000,000 possible combinations, giving you a
+                fun, unique experience every time you play! How high can you score? 
+            </p>
+            <br />
+            <p style="font-size: 15px; font-weight: bold">
+                Scoring! 
+            </p>
+            <p>Answer more, harder, questions to get a higher score. </p>
+            <p>At the end of the quiz
+            you can be added to our leaderboard!</p>
+           
+
+        </div>
+    </div>
 </body>
