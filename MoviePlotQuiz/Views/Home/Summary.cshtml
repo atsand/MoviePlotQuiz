@@ -5,6 +5,7 @@
 @using MoviePlotQuiz.Models
 @{
     List<Movie> movieList = Session["MovieList"] as List<Movie>;
+    int score = Convert.ToInt32(Session["AnswersCorrect"]) * Convert.ToInt32(Session["Difficulty"]);
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,25 +16,25 @@
     <h2>Summary of Quiz Results</h2>
     <label>Questions answered: @Convert.ToInt32(Session["QuestionCount"]) | Right: @Convert.ToInt32(Session["AnswersCorrect"]) | Wrong: @Convert.ToInt32(Session["AnswersWrong"]) | Percent: @Convert.ToDouble(Session["Percent"])%</label>
     <br />
-    
-    <form action="QuizOptions" method="post" class="toNewQuiz">
-        <input class="btn" type="submit" value="Start New Quiz" style="margin-top: 5px" />
-    </form>
-   
-    <br />
-    <form action="Index" method="post" class="toHome">
-        <input class="btn"  type="submit" value="Go to Home Page" />
-    </form>
- 
+    <h1 style="color:red">Total Score: @score</h1>
     <br />
     <form action="AddScore" method="post" class="toHome">
         <input class="btn" type="text" name="Name" value="" required maxlength="15" />
         <input class="btn" type="submit" value="Add me to the Leaderboards!" />
     </form>
     <br />
-        <form action="~/Leaderboards/Index" method="post" class="toHome">
-        <input class="btn" type="submit" value="Visit the Leaderboards" style="margin-bottom: 10px;"/>
+    <form action="QuizOptions" method="post" class="toNewQuiz">
+        <input class="btn" type="submit" value="Start New Quiz" style="margin-top: 5px" />
     </form>
+    <br />
+    <form action="Index" method="post" class="toHome">
+        <input class="btn" type="submit" value="Go to Home Page" />
+    </form>
+    <br />
+    <form action="~/Leaderboards/Index" method="post" class="toHome">
+        <input class="btn" type="submit" value="Visit the Leaderboards" style="margin-bottom: 10px;" />
+    </form>
+    <br />
     <div class="container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -57,7 +58,7 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 
 
