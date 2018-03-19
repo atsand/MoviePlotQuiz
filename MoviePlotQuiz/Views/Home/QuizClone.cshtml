@@ -2,14 +2,12 @@
     it reflects the players choice, highlights it rigth or wrong, displays the correct
     movie poster, and additional movie information, then gives a button to go to the next
     question in the quiz, or to the summary page if all questions have been answered.-->
-<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
-@model MoviePlotQuiz.Models.Movie
 @using MoviePlotQuiz.Models
 @{
     List<Movie> movieList = Session["MovieList"] as List<Movie>;
 }
 
-<body style="background-color: silver">
+<body style="background-color: black; color: white; font-size: x-large;">
     <p style="font-size:3vw; text-align: center">Answer</p>
     <div class="row">
         <div class="col-sm-4" style="">
@@ -21,35 +19,39 @@
             <p style="font-size:1.6vw; text-decoration:underline">Select an answer</p>
 
             @for (int i = 1; i < Convert.ToInt32(Session["Difficulty"]) + 1; i++)
-            {
-                <p>
-                    @if (movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title == Session["title" + i].ToString())
-                    {
-                        if (Session["UserAnswer"].ToString() == movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title)
-                        {
-                            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: green" id="right @i"> - CORRECT!</label>
-                        }
-                        else
-                        {
-                            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
-                        }
+    {
+        <p>
+            @if (movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title == Session["title" + i].ToString())
+    {
+        if (Session["UserAnswer"].ToString() == movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Title)
+        {
+            <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: green" id="right @i"> - CORRECT!</label>
+}
+else
+{
+        <label style="font-size:1.6vw; color: green" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
+}
 
-                    }
-                    else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
-                    {
-                        <label style="font-size:1.6vw; color: red; text-decoration: line-through" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: red" id="right @i">  - WRONG</label>
-                    }
-                    else
-                    {
-                        string color = "color: black";
+}
+else if (Session["UserAnswer"].ToString() == @Session["title" + i].ToString())
+{
+        <label style="font-size:1.6vw; color: red; text-decoration: line-through" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" checked />@Session["title" + i]</label><label style="font-size:1.6vw; color: red" id="right @i">  - WRONG</label>
+}
+else
+{
+        <label style="font-size:1.6vw" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
+}
+        </p>
+}
 
-                        <label style="font-size:1.6vw; @color" id="label @i"><input type="radio" id="answer @i" name="Answer" disabled="disabled" />@Session["title" + i]</label><label id="right @i"></label>
-                    }
-                </p>
+            @{
+                double correct = @Convert.ToDouble(Session["AnswersCorrect"]);
+                double mulitplier = Convert.ToDouble(Session["Difficulty"]);
+                double score = (correct * mulitplier);
             }
 
             <form action="QuizPage" method="post" class="answer">
-                <input style="font-size:1.5vw" type="submit" value="Next Question" />
+                <input class="btn" style="font-size:1.5vw" type="submit" value="Go to Next Question" />
             </form>
         </div>
         <div class="col-sm-4" style="">
@@ -63,6 +65,7 @@
             <p style="font-weight: bold">Current Score:</p>
             <p id="right" style="color: green">Right: @Convert.ToInt32(Session["AnswersCorrect"])</p>
             <p id="wrong" style="color: red">Wrong: @Convert.ToInt32(Session["AnswersWrong"])</p>
+            <p id="score" style="color: cyan">Score: @score.ToString() </p>
         </div>
     </div>
     @*<script>
@@ -129,12 +132,7 @@
                     document.getElementById("right 3").innerHTML = "  - WRONG";
                     document.getElementById("right 3").style.color = "red";
                 }
-
-
-
             }
-
-
         </script>*@
 </body>
 

@@ -12,9 +12,5 @@ namespace MoviePlotQuiz.Models
         //This just has a name property to store the player name, rest is set in home controller.
        
         public string Name { get; set; }
-     
-       
-
-
     }
 }

@@ -1,15 +1,13 @@
-﻿<!--This page shows the plot of a movie, and gives the user options to guess. After making a 
-    selection and clicking submit, the user is taken to the quiz clone page to find the 
+﻿<!--This page shows the plot of a movie, and gives the user options to guess. After making a
+    selection and clicking submit, the user is taken to the quiz clone page to find the
     correct answer and continue the quiz.-->
-<!-- (at)model(space) Namespace.Folder.ModelClass (no semicolon!) To refer, call (at)Model.FieldorMethod-->
-@model MoviePlotQuiz.Models.Movie
 
 @using MoviePlotQuiz.Models
 @{
     List<Movie> movieList = Session["MovieList"] as List<Movie>;
 }
 
-<body style="background-color: silver">
+<body style="background-color: black; color: white; font-size: x-large;">
     <p style="font-size: 3vw; text-align: center">Quiz</p>
     <div class="row">
         <div class="col-sm-4" style="">
@@ -26,7 +24,8 @@
                     <label style="font-size:1.6vw"><input type="radio" id="answer @i" name="Answer" value="@Session["title" + i]" required />@Session["title" + i] </label><br />
                 }
 
-                <input style="font-size:1.5vw" type="submit" value="Submit">
+                <input class="btn" style="font-size:1.5vw" type="submit" value="Submit">  <input  class="btn" style="font-size: 1.5vw; margin-left: 15px" id="hint" type="button" onclick="hints()" name="Hint" value="Hint - Show Cast" /><label style="font-size: 1.5vw"></label><label style="font-size: 1.5vw" hidden="hidden" id="hintsR">@Session["hints"]</label>
+
             </form>
         </div>
 
@@ -34,6 +33,31 @@
             <img class="img-responsive" style="width:100%; margin:auto" src="~/Content/riddlerQuestion.jpg">
         </div>
         <div class="col-sm-4">
+            <label id="hintL" hidden="hidden" style="font-size:1.5vw">Cast: </label><p hidden="hidden" id="hintP" style="font-size:1.5vw">@movieList[@Convert.ToInt32(Session["QuestionNumber"]) - 1].Actors</p>
+
+            <!--  When the hint button is clicked, this will check the hints available, if available
+                it will display the cast, then subtract one from hints available. Uses RAZOR
+                to reassign the new number of hints remaining to the Session[hints] so that
+                it won't reset to 3 at the next question.-->
+            <script>
+                function hints() {
+                    if (document.getElementById("hintL").hidden == true) {
+                        var x = document.getElementById("hintsR").innerHTML;
+                        if (x > 0) {
+                            document.getElementById("hintL").hidden = false;
+                            document.getElementById("hintP").hidden = false;
+                            x = x - 1;
+                            document.getElementById("hintsR").innerHTML = x;
+                        }
+                        else {
+                            alert("Sorry, you have used all of your hints!");
+                        }
+                    }
+                    else {
+                        alert("You have already used a hint on this question");
+                    }
+                }
+            </script>
         </div>
     </div>
 </body>

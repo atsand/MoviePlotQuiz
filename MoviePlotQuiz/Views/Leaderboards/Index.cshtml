@@ -6,64 +6,172 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2 style="text-align:center; font: large; text-decoration:underline;">High Scores!</h2>
-
-<p>
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Difficulty)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Questions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Correct)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Percentage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Score)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<body style="background-color: black; color:white; font-size: x-large; text-align: center">
+    <h2 style="text-align:center; font: large; text-decoration:underline;">HIGH SCORES!</h2>
+    <br />
+    <p>
+    </p>
+    <h3 style="text-align: center; text-decoration: underline ; font-family: Garamond">HARD</h3>
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Difficulty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Questions)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Correct)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Percentage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-        </tr>
-    }
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
 
-</table>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Questions)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Correct)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Percentage)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.Difficulty == "Hard")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Questions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Correct)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Percentage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <br />
+    <h3 style="text-align: center; text-decoration: underline; font-family: Garamond">MEDIUM</h3>
+    <table class="table">
+        <tr>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Questions)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Correct)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Percentage)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            if (item.Difficulty == "Medium")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Questions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Correct)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Percentage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <br />
+    <h3 style="text-align: center; text-decoration: underline ; font-family: Garamond">EASY</h3>
+    <table class="table">
+        <tr>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Questions)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Correct)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Percentage)
+            </th>
+            <th style="text-align: center">
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+
+        </tr>
+        @foreach (var item in Model)
+        {
+
+            if (item.Difficulty == "Easy")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Questions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Correct)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Percentage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</body>
